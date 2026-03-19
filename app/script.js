@@ -1,5 +1,5 @@
 const whatsappNumber = "+919940714583";
-const API_URL = "https://foursmobileswebsite.onrender.com/products/";
+const API_URL = "https://foursmobileswebsite.onrender.com/products";
 
 const FALLBACK = [
     { id:1, brand:"vivo", name:"Vivo Y31", img:"https://via.placeholder.com/150?text=Vivo+Y31",
