@@ -8,6 +8,11 @@ import os
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+
+# Fix for SQLAlchemy 2.x compatibility
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
