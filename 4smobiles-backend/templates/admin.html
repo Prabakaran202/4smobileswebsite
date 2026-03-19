@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4S Mobile — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080f;--surface:#0e101c;--card:#111420;--card2:#161926;
+  --border:rgba(37,211,102,0.13);--border2:rgba(37,211,102,0.35);
+  --accent:#25d366;--accent-dim:#1aad52;--glow:rgba(37,211,102,0.15);
+  --text:#eef0f8;--muted:#6b7098;--red:#ff5572;--yellow:#fbbf24;
+  --blue:#4d9fff;--pill:rgba(255,255,255,0.04);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'DM Sans',sans-serif;min-height:100vh;
+  background-image:radial-gradient(rgba(37,211,102,0.05) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+
+/* ── LOGIN ── */
+#loginScreen{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  z-index:999;
+  background-image:radial-gradient(rgba(37,211,102,0.05) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.login-box{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:20px;padding:40px 36px;width:100%;max-width:360px;
+  text-align:center;
+  box-shadow:0 0 60px rgba(37,211,102,0.08);
+}
+.login-box .logo{font-size:2rem;margin-bottom:10px}
+.login-box h2{
+  font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;
+  color:var(--accent);margin-bottom:6px;
+}
+.login-box p{font-size:0.82rem;color:var(--muted);margin-bottom:24px}
+.login-box input{
+  width:100%;padding:12px 14px;background:var(--pill);
+  border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;
+  outline:none;margin-bottom:12px;letter-spacing:2px;
+  transition:border 0.2s,box-shadow 0.2s;
+}
+.login-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+.login-box button{
+  width:100%;padding:12px;background:linear-gradient(135deg,#25d366,#1aad52);
+  color:#000;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;
+  border:none;border-radius:10px;cursor:pointer;
+  transition:all 0.2s;
+}
+.login-box button:hover{box-shadow:0 4px 20px rgba(37,211,102,0.4);transform:scale(1.02)}
+.login-err{color:var(--red);font-size:0.78rem;margin-top:8px;display:none}
+
+/* ── NAV ── */
+nav{
+  background:rgba(7,8,15,0.88);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:14px 28px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
+}
+.nav-left{display:flex;align-items:center;gap:10px}
+.nav-icon{
+  width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--accent-dim));
+  border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;
+  box-shadow:0 0 14px var(--glow);
+}
+nav h1{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800}
+nav h1 em{font-style:normal;color:var(--accent)}
+.nav-badge{
+  font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:20px;
+  background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);
+  color:var(--yellow);letter-spacing:0.5px;
+}
+.logout-btn{
+  padding:7px 16px;border-radius:8px;border:1px solid var(--border);
+  background:var(--pill);color:var(--muted);cursor:pointer;font-size:0.8rem;
+  font-family:'DM Sans',sans-serif;transition:all 0.2s;
+}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* ── MAIN LAYOUT ── */
+.main{max-width:1000px;margin:0 auto;padding:28px 20px 60px}
+
+/* ── SECTION HEADER ── */
+.sec-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;
+}
+.sec-head h2{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+.btn-primary{
+  display:flex;align-items:center;gap:7px;
+  padding:9px 18px;background:linear-gradient(135deg,#25d366,#1aad52);
+  color:#000;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;
+  border:none;border-radius:10px;cursor:pointer;transition:all 0.2s;
+}
+.btn-primary:hover{box-shadow:0 4px 18px rgba(37,211,102,0.4);transform:scale(1.02)}
+
+/* ── ADD/EDIT FORM CARD ── */
+.form-card{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:18px;padding:24px;margin-bottom:28px;
+  animation:slideDown 0.3s ease;
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+
+.form-card h3{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;
+  color:var(--accent);margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:540px){.form-grid{grid-template-columns:1fr}}
+
+.field label{
+  display:block;font-size:0.72rem;font-weight:600;color:var(--muted);
+  letter-spacing:0.8px;text-transform:uppercase;margin-bottom:6px;
+}
+.field input,.field select{
+  width:100%;padding:10px 13px;background:var(--pill);
+  border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.88rem;
+  outline:none;transition:border 0.2s,box-shadow 0.2s;
+}
+.field input:focus,.field select:focus{
+  border-color:var(--accent);box-shadow:0 0 0 3px var(--glow);
+}
+.field select option{background:var(--card)}
+
+/* ── VARIANTS SECTION ── */
+.variants-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:12px;
+}
+.variants-head span{
+  font-size:0.72rem;font-weight:600;color:var(--muted);
+  letter-spacing:0.8px;text-transform:uppercase;
+}
+.btn-add-variant{
+  display:flex;align-items:center;gap:5px;
+  padding:6px 13px;background:rgba(37,211,102,0.08);
+  border:1px solid rgba(37,211,102,0.3);color:var(--accent);
+  border-radius:8px;cursor:pointer;font-size:0.78rem;font-weight:600;
+  font-family:'DM Sans',sans-serif;transition:all 0.2s;
+}
+.btn-add-variant:hover{background:rgba(37,211,102,0.15)}
+
+.variant-row{
+  display:grid;grid-template-columns:80px 100px 1fr 100px 36px;
+  gap:10px;align-items:center;margin-bottom:10px;
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:12px;padding:10px 14px;
+  animation:fadeIn 0.2s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.97)}to{opacity:1;transform:scale(1)}}
+@media(max-width:600px){.variant-row{grid-template-columns:1fr 1fr;gap:8px}}
+
+.variant-row input,.variant-row select{
+  width:100%;padding:7px 10px;background:var(--bg);
+  border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.8rem;
+  outline:none;transition:border 0.2s;
+}
+.variant-row input:focus,.variant-row select:focus{border-color:var(--accent)}
+.variant-row label{font-size:0.68rem;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:3px;display:block}
+
+.del-variant{
+  width:32px;height:32px;background:rgba(255,85,114,0.08);
+  border:1px solid rgba(255,85,114,0.2);border-radius:8px;
+  color:var(--red);cursor:pointer;font-size:0.9rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;flex-shrink:0;
+}
+.del-variant:hover{background:rgba(255,85,114,0.18)}
+
+.stock-toggle{
+  display:flex;align-items:center;gap:6px;cursor:pointer;
+  font-size:0.78rem;color:var(--muted);user-select:none;
+}
+.stock-toggle input{width:auto;cursor:pointer;accent-color:var(--accent)}
+
+.form-actions{display:flex;gap:10px;margin-top:20px}
+.btn-save{
+  flex:1;padding:11px;background:linear-gradient(135deg,#25d366,#1aad52);
+  color:#000;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;
+  border:none;border-radius:10px;cursor:pointer;transition:all 0.2s;
+}
+.btn-save:hover{box-shadow:0 4px 18px rgba(37,211,102,0.4)}
+.btn-cancel{
+  padding:11px 20px;background:var(--pill);border:1px solid var(--border);
+  color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.88rem;
+  border-radius:10px;cursor:pointer;transition:all 0.2s;
+}
+.btn-cancel:hover{border-color:var(--red);color:var(--red)}
+
+/* ── PRODUCT LIST ── */
+.product-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:18px;margin-bottom:14px;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  animation:fadeUp 0.35s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.product-card:hover{border-color:rgba(37,211,102,0.3);box-shadow:0 4px 20px rgba(37,211,102,0.07)}
+
+.product-head{display:flex;align-items:center;gap:14px}
+.product-img{
+  width:56px;height:56px;border-radius:10px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  object-fit:contain;padding:4px;flex-shrink:0;
+}
+.product-info{flex:1;min-width:0}
+.product-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem}
+.product-brand{
+  display:inline-block;font-size:0.65rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.8px;
+  padding:2px 8px;border-radius:20px;margin-top:3px;
+}
+.brand-vivo   {background:rgba(77,159,255,0.1);color:var(--blue);border:1px solid rgba(77,159,255,0.25)}
+.brand-oppo   {background:rgba(251,191,36,0.1);color:var(--yellow);border:1px solid rgba(251,191,36,0.25)}
+.brand-samsung{background:rgba(77,159,255,0.1);color:#7ec8ff;border:1px solid rgba(77,159,255,0.25)}
+.brand-redmi  {background:rgba(255,85,114,0.1);color:var(--red);border:1px solid rgba(255,85,114,0.25)}
+.brand-realme {background:rgba(251,146,60,0.1);color:#fb923c;border:1px solid rgba(251,146,60,0.25)}
+
+.product-actions{display:flex;gap:8px;flex-shrink:0}
+.btn-edit{
+  padding:7px 14px;background:rgba(77,159,255,0.08);
+  border:1px solid rgba(77,159,255,0.25);color:var(--blue);
+  border-radius:8px;cursor:pointer;font-size:0.78rem;font-weight:600;
+  font-family:'DM Sans',sans-serif;transition:all 0.2s;
+}
+.btn-edit:hover{background:rgba(77,159,255,0.18)}
+.btn-delete{
+  padding:7px 14px;background:rgba(255,85,114,0.08);
+  border:1px solid rgba(255,85,114,0.25);color:var(--red);
+  border-radius:8px;cursor:pointer;font-size:0.78rem;font-weight:600;
+  font-family:'DM Sans',sans-serif;transition:all 0.2s;
+}
+.btn-delete:hover{background:rgba(255,85,114,0.18)}
+
+/* ── VARIANTS DISPLAY ── */
+.variants-display{
+  display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;
+  padding-top:14px;border-top:1px solid var(--border);
+}
+.variant-chip{
+  display:flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:20px;font-size:0.75rem;font-weight:600;
+  font-family:'JetBrains Mono',monospace;
+}
+.variant-chip.instock{
+  background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.25);color:var(--accent);
+}
+.variant-chip.outstock{
+  background:rgba(255,85,114,0.07);border:1px solid rgba(255,85,114,0.2);color:var(--red);
+  text-decoration:line-through;opacity:0.7;
+}
+.variant-chip .v-price{color:var(--text);margin-left:4px;font-family:'DM Sans',sans-serif;font-weight:600}
+
+/* ── EMPTY ── */
+.empty-state{
+  text-align:center;padding:60px 20px;color:var(--muted);
+  border:1px dashed var(--border);border-radius:16px;
+}
+.empty-state .ei{font-size:2.5rem;display:block;margin-bottom:10px}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:28px;right:28px;
+  background:var(--card2);border:1px solid var(--border2);
+  border-radius:12px;padding:12px 20px;
+  font-size:0.85rem;font-weight:600;color:var(--accent);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  transform:translateY(80px);opacity:0;
+  transition:all 0.3s cubic-bezier(.22,.68,0,1.2);
+  z-index:999;pointer-events:none;
+  display:flex;align-items:center;gap:8px;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.error{border-color:rgba(255,85,114,0.4);color:var(--red)}
+
+/* ── STATS ROW ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:28px}
+.stat-box{
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:16px;text-align:center;
+}
+.stat-box .sv{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent)}
+.stat-box .sl{font-size:0.72rem;color:var(--muted);margin-top:3px;letter-spacing:0.5px;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="logo">🔐</div>
+    <h2>Admin Login</h2>
+    <p>4S Mobile — Staff Only</p>
+    <input type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button onclick="doLogin()">Login →</button>
+    <div class="login-err" id="loginErr">❌ Wrong password</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <div class="nav-icon">📱</div>
+    <h1>4S <em>Mobile</em></h1>
+    <span class="nav-badge">ADMIN</span>
+  </div>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-box">
+      <div class="sv" id="statTotal">0</div>
+      <div class="sl">Total Phones</div>
+    </div>
+    <div class="stat-box">
+      <div class="sv" id="statVariants">0</div>
+      <div class="sl">Total Variants</div>
+    </div>
+    <div class="stat-box">
+      <div class="sv" id="statInStock" style="color:#25d366">0</div>
+      <div class="sl">In Stock</div>
+    </div>
+    <div class="stat-box">
+      <div class="sv" id="statOut" style="color:var(--red)">0</div>
+      <div class="sl">Out of Stock</div>
+    </div>
+  </div>
+
+  <!-- ADD/EDIT FORM (hidden by default) -->
+  <div class="form-card" id="formCard" style="display:none">
+    <h3 id="formTitle">➕ Add New Phone</h3>
+
+    <div class="form-grid">
+      <div class="field">
+        <label>Brand</label>
+        <select id="fBrand">
+          <option value="vivo">Vivo</option>
+          <option value="oppo">Oppo</option>
+          <option value="samsung">Samsung</option>
+          <option value="redmi">Redmi</option>
+          <option value="realme">Realme</option>
+          <option value="oneplus">OnePlus</option>
+          <option value="nokia">Nokia</option>
+          <option value="motorola">Motorola</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Model Name</label>
+        <input type="text" id="fName" placeholder="e.g. Vivo Y31">
+      </div>
+      <div class="field" style="grid-column:1/-1">
+        <label>Image URL</label>
+        <input type="text" id="fImg" placeholder="https://...">
+      </div>
+    </div>
+
+    <!-- VARIANTS -->
+    <div class="variants-head">
+      <span>Variants (RAM / Storage / Price)</span>
+      <button class="btn-add-variant" onclick="addVariantRow()">➕ Add Variant</button>
+    </div>
+
+    <div id="variantRows"></div>
+
+    <div class="form-actions">
+      <button class="btn-save" onclick="saveProduct()">💾 Save Phone</button>
+      <button class="btn-cancel" onclick="closeForm()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- PRODUCT LIST -->
+  <div class="sec-head">
+    <h2>All Phones</h2>
+    <button class="btn-primary" onclick="openAddForm()">➕ Add Phone</button>
+  </div>
+
+  <div id="productList"></div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ────────── CONFIG ────────── */
+const ADMIN_PW = "4smobile2024"; // change this!
+
+/* ────────── AUTH ────────── */
+function doLogin(){
+  const v = document.getElementById("pwInput").value;
+  if(v === ADMIN_PW){
+    document.getElementById("loginScreen").style.display = "none";
+    render();
+  } else {
+    document.getElementById("loginErr").style.display = "block";
+    document.getElementById("pwInput").value = "";
+  }
+}
+function logout(){
+  document.getElementById("loginScreen").style.display = "flex";
+  document.getElementById("pwInput").value = "";
+}
+
+/* ────────── DATA (localStorage) ────────── */
+function getData(){
+  return JSON.parse(localStorage.getItem("4smobiles_products") || "[]");
+}
+function setData(d){
+  localStorage.setItem("4smobiles_products", JSON.stringify(d));
+}
+
+/* ────────── Default seed data ────────── */
+function seedIfEmpty(){
+  if(getData().length === 0){
+    setData([
+      { id:1, brand:"vivo", name:"Vivo Y31", img:"https://via.placeholder.com/150?text=Vivo+Y31",
+        variants:[
+          {ram:4,storage:128,price:12999,stock:true},
+          {ram:6,storage:128,price:14999,stock:true},
+          {ram:8,storage:128,price:16999,stock:false}
+        ]},
+      { id:2, brand:"redmi", name:"Redmi Note 12", img:"https://via.placeholder.com/150?text=Redmi+Note+12",
+        variants:[
+          {ram:4,storage:64,price:13999,stock:true},
+          {ram:8,storage:128,price:15999,stock:true},
+          {ram:8,storage:256,price:17999,stock:true}
+        ]},
+      { id:3, brand:"samsung", name:"Samsung A14", img:"https://via.placeholder.com/150?text=Samsung+A14",
+        variants:[
+          {ram:4,storage:64,price:11999,stock:true},
+          {ram:6,storage:128,price:13999,stock:false}
+        ]},
+    ]);
+  }
+}
+
+/* ────────── FORM STATE ────────── */
+let editingId = null;
+
+function openAddForm(){
+  editingId = null;
+  document.getElementById("formTitle").textContent = "➕ Add New Phone";
+  document.getElementById("fBrand").value = "vivo";
+  document.getElementById("fName").value = "";
+  document.getElementById("fImg").value = "";
+  document.getElementById("variantRows").innerHTML = "";
+  addVariantRow(); // default 1 row
+  document.getElementById("formCard").style.display = "block";
+  document.getElementById("formCard").scrollIntoView({behavior:"smooth"});
+}
+
+function openEditForm(id){
+  const products = getData();
+  const p = products.find(x => x.id === id);
+  if(!p) return;
+  editingId = id;
+  document.getElementById("formTitle").textContent = "✏️ Edit — " + p.name;
+  document.getElementById("fBrand").value = p.brand;
+  document.getElementById("fName").value = p.name;
+  document.getElementById("fImg").value = p.img;
+  document.getElementById("variantRows").innerHTML = "";
+  p.variants.forEach(v => addVariantRow(v));
+  document.getElementById("formCard").style.display = "block";
+  document.getElementById("formCard").scrollIntoView({behavior:"smooth"});
+}
+
+function closeForm(){
+  document.getElementById("formCard").style.display = "none";
+  editingId = null;
+}
+
+/* ────────── VARIANT ROWS ────────── */
+let vRowId = 0;
+function addVariantRow(data=null){
+  vRowId++;
+  const id = vRowId;
+  const div = document.createElement("div");
+  div.className = "variant-row";
+  div.id = "vrow_" + id;
+  div.innerHTML = `
+    <div>
+      <label>RAM (GB)</label>
+      <select class="v-ram">
+        ${[2,3,4,6,8,12].map(r=>`<option value="${r}" ${data&&data.ram==r?'selected':''}>${r} GB</option>`).join('')}
+      </select>
+    </div>
+    <div>
+      <label>Storage (GB)</label>
+      <select class="v-storage">
+        ${[32,64,128,256,512].map(s=>`<option value="${s}" ${data&&data.storage==s?'selected':''}>${s} GB</option>`).join('')}
+      </select>
+    </div>
+    <div>
+      <label>Price (₹)</label>
+      <input type="number" class="v-price" placeholder="12999" value="${data?data.price:''}">
+    </div>
+    <div>
+      <label style="margin-bottom:10px">Stock</label>
+      <label class="stock-toggle">
+        <input type="checkbox" class="v-stock" ${!data||data.stock?'checked':''}>
+        <span>In Stock</span>
+      </label>
+    </div>
+    <button class="del-variant" onclick="removeVariantRow('vrow_${id}')">✕</button>
+  `;
+  document.getElementById("variantRows").appendChild(div);
+}
+
+function removeVariantRow(id){
+  const rows = document.querySelectorAll(".variant-row");
+  if(rows.length <= 1){ showToast("At least 1 variant வேணும்!", true); return; }
+  const el = document.getElementById(id);
+  if(el) el.remove();
+}
+
+/* ────────── SAVE ────────── */
+function saveProduct(){
+  const brand = document.getElementById("fBrand").value;
+  const name  = document.getElementById("fName").value.trim();
+  const img   = document.getElementById("fImg").value.trim() ||
+                `https://via.placeholder.com/150?text=${encodeURIComponent(name)}`;
+
+  if(!name){ showToast("Model name enter பண்ணு!", true); return; }
+
+  const rows = document.querySelectorAll(".variant-row");
+  const variants = [];
+  let valid = true;
+  rows.forEach(row => {
+    const ram     = parseInt(row.querySelector(".v-ram").value);
+    const storage = parseInt(row.querySelector(".v-storage").value);
+    const price   = parseInt(row.querySelector(".v-price").value);
+    const stock   = row.querySelector(".v-stock").checked;
+    if(!price || price < 1){ valid = false; return; }
+    variants.push({ram, storage, price, stock});
+  });
+
+  if(!valid){ showToast("All variants-க்கு price enter பண்ணு!", true); return; }
+  if(variants.length === 0){ showToast("Minimum 1 variant வேணும்!", true); return; }
+
+  const products = getData();
+
+  if(editingId !== null){
+    const idx = products.findIndex(x => x.id === editingId);
+    if(idx > -1) products[idx] = { id: editingId, brand, name, img, variants };
+    showToast("✅ Phone updated!");
+  } else {
+    const newId = Date.now();
+    products.push({ id: newId, brand, name, img, variants });
+    showToast("✅ Phone added!");
+  }
+
+  setData(products);
+  closeForm();
+  render();
+}
+
+/* ────────── DELETE ────────── */
+function deleteProduct(id){
+  if(!confirm("Delete பண்றீயா?")) return;
+  const products = getData().filter(x => x.id !== id);
+  setData(products);
+  showToast("🗑️ Deleted");
+  render();
+}
+
+/* ────────── RENDER ────────── */
+function render(){
+  const products = getData();
+
+  // stats
+  let totalVariants = 0, inStock = 0, outStock = 0;
+  products.forEach(p => {
+    p.variants.forEach(v => {
+      totalVariants++;
+      if(v.stock) inStock++; else outStock++;
+    });
+  });
+  document.getElementById("statTotal").textContent    = products.length;
+  document.getElementById("statVariants").textContent = totalVariants;
+  document.getElementById("statInStock").textContent  = inStock;
+  document.getElementById("statOut").textContent      = outStock;
+
+  const list = document.getElementById("productList");
+
+  if(products.length === 0){
+    list.innerHTML = `<div class="empty-state"><span class="ei">📭</span><p>No phones yet — Add one!</p></div>`;
+    return;
+  }
+
+  list.innerHTML = products.map((p,i) => {
+    const brandClass = "brand-" + p.brand;
+    const variantChips = p.variants.map(v => `
+      <div class="variant-chip ${v.stock?'instock':'outstock'}">
+        ${v.ram}GB / ${v.storage}GB
+        <span class="v-price">₹${v.price.toLocaleString("en-IN")}</span>
+      </div>
+    `).join('');
+
+    return `
+    <div class="product-card" style="animation-delay:${i*0.06}s">
+      <div class="product-head">
+        <img class="product-img" src="${p.img}" alt="${p.name}">
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-brand ${brandClass}">${p.brand.toUpperCase()}</div>
+        </div>
+        <div class="product-actions">
+          <button class="btn-edit" onclick="openEditForm(${p.id})">✏️ Edit</button>
+          <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️</button>
+        </div>
+      </div>
+      <div class="variants-display">${variantChips}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ────────── TOAST ────────── */
+function showToast(msg, isError=false){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast" + (isError?" error":"");
+  setTimeout(()=>t.classList.add("show"), 10);
+  setTimeout(()=>t.classList.remove("show"), 2800);
+}
+
+/* ────────── INIT ────────── */
+seedIfEmpty();
+render();
+</script>
+</body>
+</html>
