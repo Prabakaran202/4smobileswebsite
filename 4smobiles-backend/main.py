@@ -7,24 +7,20 @@ import models
 from database import engine
 from routers import products, admin
 
-# Create tables
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="4S Mobile API", version="1.0.0")
 
-# CORS — allow Netlify frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["4S Mobile https://share.google/S16LvVugvi0eUz69s"],   # change to ["https://4smobiles.netlify.app"] in production
+    allow_origins=["https://4smobiles.netlify.app"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Routers
 app.include_router(products.router)
 app.include_router(admin.router)
 
-# Serve admin.html at /admin
 app.mount("/static", StaticFiles(directory="templates"), name="static")
 
 @app.get("/admin-panel")

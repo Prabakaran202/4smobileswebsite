@@ -11,7 +11,7 @@ router    = APIRouter(prefix="/admin", tags=["Admin"])
 security  = HTTPBearer()
 
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "4smobile2024")
-JWT_SECRET     = os.getenv("JWT_SECRET", "changeme_secret_key")
+JWT_SECRET     = os.getenv("JWT_SECRET", "praba")
 JWT_ALGO       = "HS256"
 
 
