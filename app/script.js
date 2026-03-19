@@ -1,4 +1,4 @@
-const whatsappNumber = "919999999999"; // change to your number
+const whatsappNumber = "+919940714583"; // change to your number
 
 const products = [
     {
