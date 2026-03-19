@@ -15,7 +15,7 @@ app = FastAPI(title="4S Mobile API", version="1.0.0")
 # CORS — allow Netlify frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # change to ["https://4smobiles.netlify.app"] in production
+    allow_origins=["4S Mobile https://share.google/S16LvVugvi0eUz69s"],   # change to ["https://4smobiles.netlify.app"] in production
     allow_methods=["*"],
     allow_headers=["*"],
 )
