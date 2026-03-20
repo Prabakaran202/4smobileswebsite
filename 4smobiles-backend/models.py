@@ -14,7 +14,14 @@ class Product(Base):
     created  = Column(DateTime, server_default=func.now())
 
     variants = relationship("Variant", back_populates="product", cascade="all, delete")
-
+class Accessory(Base):
+    __tablename__ = "accessories"
+    id        = Column(Integer, primary_key=True, index=True)
+    category  = Column(String, nullable=False)
+    name      = Column(String, nullable=False)
+    price     = Column(Integer, nullable=False)
+    old_price = Column(Integer, nullable=True)
+    img_url   = Column(String, nullable=True)
 
 class Variant(Base):
     __tablename__ = "variants"
@@ -26,13 +33,4 @@ class Variant(Base):
     price      = Column(Integer, nullable=False)   # INR
     stock      = Column(Boolean, default=True)
 
-    product = relationship("Product", back_populates="variants")
-class Accessory(Base):
-    __tablename__ = "accessories"
-
-    id        = Column(Integer, primary_key=True, index=True)
-    category  = Column(String, nullable=False)
-    name      = Column(String, nullable=False)
-    price     = Column(Integer, nullable=False)
-    old_price = Column(Integer, nullable=True)
-    img_url   = Column(String, nullable=True)
+    
