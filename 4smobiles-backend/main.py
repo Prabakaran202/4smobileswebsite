@@ -5,8 +5,9 @@ from fastapi.responses import FileResponse
 
 import models
 from database import engine
-from routers import products, admin, accessories
+from routers import products, admin
 
+from routers import accessories
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="4S Mobile API", version="1.0.0")
