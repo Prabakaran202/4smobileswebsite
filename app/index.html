@@ -6,153 +6,399 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
     <title>4S Mobile</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* ── Accessories Section ── */
+        :root {
+            --bg: #080a08;
+            --surface: #0e120e;
+            --card: #111611;
+            --border: #1a2a1a;
+            --green: #00e676;
+            --green-dim: #00c85a;
+            --green-glow: rgba(0,230,118,0.15);
+            --green-subtle: rgba(0,230,118,0.07);
+            --text: #e0ede0;
+            --muted: #4a6a4a;
+            --danger: #ff5252;
+            --sans: 'DM Sans', sans-serif;
+            --display: 'Syne', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            min-height: 100vh;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8,10,8,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 0.75rem 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+        .logo-icon {
+            width: 36px; height: 36px;
+            background: var(--green-subtle);
+            border: 1.5px solid var(--green);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 0 12px var(--green-glow);
+        }
+        .brand-logo h1 {
+            font-family: var(--display);
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+        .brand-logo h1 em {
+            font-style: normal;
+            color: var(--green);
+        }
+
+        .search-wrap {
+            flex: 1;
+            min-width: 180px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 0.45rem 0.9rem;
+            transition: border-color 0.2s;
+        }
+        .search-wrap:focus-within {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px var(--green-glow);
+        }
+        .search-icon { font-size: 0.9rem; color: var(--muted); }
+        .search-wrap input {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 0.88rem;
+            width: 100%;
+        }
+        .search-wrap input::placeholder { color: var(--muted); }
+
+        #brandFilter {
+            display: flex;
+            list-style: none;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        #brandFilter li {
+            padding: 0.3rem 0.85rem;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--muted);
+            background: var(--surface);
+            transition: all 0.18s;
+        }
+        #brandFilter li:hover { border-color: var(--green); color: var(--green); }
+        #brandFilter li.active {
+            background: var(--green);
+            border-color: var(--green);
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* ── SECTION TABS ── */
         .section-tabs {
             display: flex;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem 0;
-            border-bottom: 2px solid #f0f0f0;
-            background: #fff;
+            gap: 0;
+            padding: 0 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
             position: sticky;
-            top: 72px;
+            top: 0;
             z-index: 90;
         }
         .tab-btn {
-            padding: 0.55rem 1.4rem;
+            padding: 0.75rem 1.4rem;
             border: none;
             background: none;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.92rem;
+            font-family: var(--sans);
+            font-size: 0.88rem;
             font-weight: 600;
-            color: #999;
+            color: var(--muted);
             cursor: pointer;
             border-bottom: 3px solid transparent;
-            margin-bottom: -2px;
-            transition: color 0.2s, border-color 0.2s;
+            margin-bottom: -1px;
+            transition: all 0.2s;
         }
+        .tab-btn:hover { color: var(--green); }
         .tab-btn.active {
-            color: #111;
-            border-bottom-color: #111;
+            color: var(--green);
+            border-bottom-color: var(--green);
         }
-        .tab-btn:hover:not(.active) { color: #555; }
 
-        /* accessories category filter */
-        .acc-filter {
+        /* ── HERO STRIP ── */
+        .hero-strip {
             display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            padding: 1rem 1.5rem;
-            background: #fafafa;
-            border-bottom: 1px solid #ebebeb;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 1.5rem 0.8rem;
+            border-bottom: 1px solid var(--border);
         }
-        .acc-filter span {
-            padding: 0.35rem 1rem;
-            border-radius: 999px;
-            border: 1.5px solid #ddd;
-            font-size: 0.8rem;
-            font-weight: 600;
-            font-family: 'DM Sans', sans-serif;
-            cursor: pointer;
-            background: #fff;
-            color: #555;
-            transition: all 0.18s;
-        }
-        .acc-filter span.active {
-            background: #111;
+        .hero-strip h2 {
+            font-family: var(--display);
+            font-size: 1.3rem;
+            font-weight: 800;
             color: #fff;
-            border-color: #111;
+        }
+        #countBadge, #accCountBadge {
+            background: var(--green-subtle);
+            border: 1px solid rgba(0,230,118,0.2);
+            color: var(--green);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 999px;
         }
 
-        /* acc card tweaks */
-        .acc-card {
-            border-radius: 18px;
-            background: #fff;
-            box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-            padding: 1.2rem;
+        /* ── PHONE CARDS GRID ── */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.2rem;
+            padding: 1.5rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.1rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            animation: fadeUp 0.4s ease both;
+            gap: 0.55rem;
             position: relative;
             overflow: hidden;
+            animation: fadeUp 0.4s ease both;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            border-color: rgba(0,230,118,0.3);
+            box-shadow: 0 4px 24px rgba(0,230,118,0.08);
         }
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
+            from { opacity: 0; transform: translateY(14px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-        .acc-card .cat-tag {
+
+        .brand-tag {
             position: absolute;
-            top: 0.85rem;
-            left: 0.85rem;
-            background: #f3f3f3;
-            color: #555;
-            font-size: 0.65rem;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: var(--green-subtle);
+            border: 1px solid rgba(0,230,118,0.2);
+            color: var(--green);
+            font-size: 0.62rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            padding: 3px 8px;
+            padding: 2px 8px;
             border-radius: 6px;
         }
-        .acc-card .img-wrap {
+
+        .img-wrap {
             width: 100%;
             aspect-ratio: 1;
-            background: #f8f8f8;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            margin-top: 0.5rem;
         }
-        .acc-card .img-wrap img {
-            width: 80%;
-            height: 80%;
+        .img-wrap img {
+            width: 80%; height: 80%;
             object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
         }
-        .acc-card h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #111;
+
+        .card h3 {
+            font-family: var(--display);
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: #fff;
             line-height: 1.3;
-            margin-top: 0.25rem;
+            margin-top: 0.15rem;
         }
-        .acc-card .acc-price {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #111;
+
+        /* variant pills */
+        .variant-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
         }
-        .acc-card .acc-price .old {
-            font-size: 0.78rem;
-            font-weight: 500;
-            color: #bbb;
+        .vpill {
+            padding: 3px 9px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            background: var(--surface);
+            transition: all 0.15s;
+        }
+        .vpill:hover:not(.out-pill) { border-color: var(--green); color: var(--green); }
+        .vpill.selected {
+            background: var(--green);
+            border-color: var(--green);
+            color: #000;
+        }
+        .vpill.out-pill {
+            opacity: 0.35;
+            cursor: not-allowed;
             text-decoration: line-through;
-            margin-left: 6px;
         }
-        .acc-card .wa-btn {
+
+        /* price */
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+        .price {
+            font-family: var(--display);
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--green);
+        }
+        .price-note {
+            font-size: 0.68rem;
+            color: var(--muted);
+        }
+
+        /* badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 999px;
+            width: fit-content;
+        }
+        .badge.available {
+            background: rgba(0,230,118,0.1);
+            color: var(--green);
+            border: 1px solid rgba(0,230,118,0.25);
+        }
+        .badge.out {
+            background: rgba(255,82,82,0.08);
+            color: var(--danger);
+            border: 1px solid rgba(255,82,82,0.2);
+        }
+        .badge-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 1.8s infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity: 1; }
+            50%      { opacity: 0.4; }
+        }
+
+        /* whatsapp button */
+        .wa-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            background: #25d366;
-            color: #fff;
             text-decoration: none;
             border-radius: 10px;
             padding: 0.6rem;
             font-size: 0.82rem;
-            font-weight: 600;
-            font-family: 'DM Sans', sans-serif;
-            margin-top: 0.25rem;
-            transition: opacity 0.2s;
+            font-weight: 700;
+            font-family: var(--sans);
+            margin-top: 0.15rem;
+            transition: opacity 0.2s, transform 0.1s;
         }
-        .acc-card .wa-btn:hover { opacity: 0.88; }
+        .wa-btn.order {
+            background: var(--green);
+            color: #000;
+        }
+        .wa-btn.order:hover { opacity: 0.88; transform: scale(0.98); }
+        .wa-btn.disabled {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            cursor: not-allowed;
+        }
 
-        /* hidden sections */
-        .section-panel { display: none; }
-        .section-panel.active { display: block; }
+        /* empty state */
+        .empty {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--muted);
+        }
+        .ei { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+
+        /* ── ACCESSORIES ── */
+        .acc-filter {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding: 0.6rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .acc-filter::-webkit-scrollbar { display: none; }
+        .acc-filter span {
+            padding: 0.35rem 1rem;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--card);
+            color: var(--muted);
+            transition: all 0.18s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .acc-filter span:hover { border-color: var(--green); color: var(--green); }
+        .acc-filter span.active {
+            background: var(--green);
+            color: #000;
+            border-color: var(--green);
+            font-weight: 700;
+        }
 
         .acc-grid {
             display: grid;
@@ -161,13 +407,101 @@
             padding: 1.5rem;
         }
 
+        .acc-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.4s ease both;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .acc-card:hover {
+            border-color: rgba(0,230,118,0.3);
+            box-shadow: 0 4px 24px rgba(0,230,118,0.08);
+        }
+        .acc-card .cat-tag {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            background: var(--green-subtle);
+            border: 1px solid rgba(0,230,118,0.2);
+            color: var(--green);
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            padding: 2px 7px;
+            border-radius: 6px;
+        }
+        .acc-card .img-wrap {
+            width: 100%;
+            aspect-ratio: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 0.4rem;
+        }
+        .acc-card .img-wrap img {
+            width: 75%; height: 75%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+        }
+        .acc-card h3 {
+            font-family: var(--display);
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.3;
+            margin-top: 0.2rem;
+        }
+        .acc-price {
+            font-family: var(--display);
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--green);
+        }
+        .acc-price .old {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: line-through;
+            margin-left: 6px;
+            font-family: var(--sans);
+        }
+
+        /* section panels */
+        .section-panel { display: none; }
+        .section-panel.active { display: block; }
+
         .acc-empty {
+            grid-column: 1/-1;
             text-align: center;
             padding: 3rem 1rem;
-            color: #bbb;
-            font-family: 'DM Sans', sans-serif;
+            color: var(--muted);
         }
-        .acc-empty .ei { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--green-dim); }
+
+        @media (max-width: 600px) {
+            nav { padding: 0.65rem 1rem; gap: 0.75rem; }
+            .section-tabs { top: 120px; }
+            .container, .acc-grid { padding: 1rem; gap: 1rem; }
+            .container { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .acc-grid   { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        }
     </style>
 </head>
 <body>
@@ -181,6 +515,10 @@
         <span class="search-icon">🔍</span>
         <input type="text" id="search" placeholder="Search phones...">
     </div>
+</nav>
+
+<!-- Brand filter row — hidden on accessories tab -->
+<div id="brandFilterWrap" style="background:var(--bg);border-bottom:1px solid var(--border);padding:0.55rem 1.5rem;">
     <ul id="brandFilter">
         <li class="active" onclick="filterBrand('all',this)">All</li>
         <li onclick="filterBrand('vivo',this)">Vivo</li>
@@ -190,7 +528,7 @@
         <li onclick="filterBrand('realme',this)">Realme</li>
         <li onclick="filterBrand('motorola',this)">Motorola</li>
     </ul>
-</nav>
+</div>
 
 <!-- Section Tabs -->
 <div class="section-tabs">
@@ -198,7 +536,7 @@
     <button class="tab-btn" onclick="switchTab('accessories', this)">🎧 Accessories</button>
 </div>
 
-<!-- PHONES PANEL -->
+<!-- PHONES -->
 <div class="section-panel active" id="panel-phones">
     <div class="hero-strip">
         <h2>Available Phones</h2>
@@ -207,14 +545,12 @@
     <div class="container" id="productContainer"></div>
 </div>
 
-<!-- ACCESSORIES PANEL -->
+<!-- ACCESSORIES -->
 <div class="section-panel" id="panel-accessories">
     <div class="hero-strip">
         <h2>Accessories</h2>
         <span id="accCountBadge">0 items</span>
     </div>
-
-    <!-- Category filter -->
     <div class="acc-filter">
         <span class="active" onclick="filterAcc('all', this)">All</span>
         <span onclick="filterAcc('earphones', this)">🎧 Earphones</span>
@@ -224,7 +560,6 @@
         <span onclick="filterAcc('powerbank', this)">🔋 Power Banks</span>
         <span onclick="filterAcc('screenguard', this)">📲 Screen Guards</span>
     </div>
-
     <div class="acc-grid" id="accContainer"></div>
 </div>
 
@@ -232,91 +567,41 @@
 const whatsappNumber = "+919940714583";
 const API_URL = "https://foursmobileswebsite.onrender.com";
 
-// ── Accessories Data ──
 const ACCESSORIES = [
-    {
-        id: "a1", category: "earphones", name: "boAt Bassheads 100",
-        img_url: "https://via.placeholder.com/150?text=boAt+100",
-        price: 299, old_price: 599,
-    },
-    {
-        id: "a2", category: "earphones", name: "JBL C100SI Wired",
-        img_url: "https://via.placeholder.com/150?text=JBL+C100SI",
-        price: 599, old_price: 999,
-    },
-    {
-        id: "a3", category: "charger", name: "65W Super Charger (Type-C)",
-        img_url: "https://via.placeholder.com/150?text=65W+Charger",
-        price: 499, old_price: 799,
-    },
-    {
-        id: "a4", category: "charger", name: "20W iPhone Fast Charger",
-        img_url: "https://via.placeholder.com/150?text=20W+Charger",
-        price: 399, old_price: 699,
-    },
-    {
-        id: "a5", category: "case", name: "Transparent Slim Case",
-        img_url: "https://via.placeholder.com/150?text=Slim+Case",
-        price: 149, old_price: 299,
-    },
-    {
-        id: "a6", category: "case", name: "Shockproof Armour Case",
-        img_url: "https://via.placeholder.com/150?text=Armour+Case",
-        price: 249, old_price: 499,
-    },
-    {
-        id: "a7", category: "cable", name: "Type-C Braided Cable 1m",
-        img_url: "https://via.placeholder.com/150?text=TypeC+Cable",
-        price: 199, old_price: 399,
-    },
-    {
-        id: "a8", category: "cable", name: "Lightning Cable (1m)",
-        img_url: "https://via.placeholder.com/150?text=Lightning+Cable",
-        price: 249, old_price: 449,
-    },
-    {
-        id: "a9", category: "powerbank", name: "10000mAh Power Bank",
-        img_url: "https://via.placeholder.com/150?text=10000mAh",
-        price: 799, old_price: 1299,
-    },
-    {
-        id: "a10", category: "powerbank", name: "20000mAh Fast Charge PB",
-        img_url: "https://via.placeholder.com/150?text=20000mAh",
-        price: 1299, old_price: 1999,
-    },
-    {
-        id: "a11", category: "screenguard", name: "Tempered Glass (Universal)",
-        img_url: "https://via.placeholder.com/150?text=Tempered+Glass",
-        price: 99, old_price: 199,
-    },
-    {
-        id: "a12", category: "screenguard", name: "Privacy Screen Protector",
-        img_url: "https://via.placeholder.com/150?text=Privacy+Guard",
-        price: 149, old_price: 299,
-    },
+    { id:"a1",  category:"earphones",   name:"boAt Bassheads 100",         img_url:"https://via.placeholder.com/150?text=boAt+100",         price:299,  old_price:599  },
+    { id:"a2",  category:"earphones",   name:"JBL C100SI Wired",           img_url:"https://via.placeholder.com/150?text=JBL+C100SI",        price:599,  old_price:999  },
+    { id:"a3",  category:"charger",     name:"65W Super Charger (Type-C)", img_url:"https://via.placeholder.com/150?text=65W+Charger",       price:499,  old_price:799  },
+    { id:"a4",  category:"charger",     name:"20W iPhone Fast Charger",    img_url:"https://via.placeholder.com/150?text=20W+Charger",       price:399,  old_price:699  },
+    { id:"a5",  category:"case",        name:"Transparent Slim Case",      img_url:"https://via.placeholder.com/150?text=Slim+Case",         price:149,  old_price:299  },
+    { id:"a6",  category:"case",        name:"Shockproof Armour Case",     img_url:"https://via.placeholder.com/150?text=Armour+Case",       price:249,  old_price:499  },
+    { id:"a7",  category:"cable",       name:"Type-C Braided Cable 1m",    img_url:"https://via.placeholder.com/150?text=TypeC+Cable",       price:199,  old_price:399  },
+    { id:"a8",  category:"cable",       name:"Lightning Cable (1m)",       img_url:"https://via.placeholder.com/150?text=Lightning+Cable",   price:249,  old_price:449  },
+    { id:"a9",  category:"powerbank",   name:"10000mAh Power Bank",        img_url:"https://via.placeholder.com/150?text=10000mAh",          price:799,  old_price:1299 },
+    { id:"a10", category:"powerbank",   name:"20000mAh Fast Charge PB",    img_url:"https://via.placeholder.com/150?text=20000mAh",          price:1299, old_price:1999 },
+    { id:"a11", category:"screenguard", name:"Tempered Glass (Universal)", img_url:"https://via.placeholder.com/150?text=Tempered+Glass",    price:99,   old_price:199  },
+    { id:"a12", category:"screenguard", name:"Privacy Screen Protector",   img_url:"https://via.placeholder.com/150?text=Privacy+Guard",     price:149,  old_price:299  },
 ];
 
-// ── Tab Switcher ──
+// ── Tab ──
 function switchTab(tab, el) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     el.classList.add('active');
     document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + tab).classList.add('active');
-
-    // hide brand filter when accessories tab
-    const brandFilter = document.getElementById('brandFilter');
-    const searchInput = document.getElementById('search');
+    const bfWrap = document.getElementById('brandFilterWrap');
+    const si = document.getElementById('search');
     if (tab === 'accessories') {
-        brandFilter.style.display = 'none';
-        searchInput.placeholder = 'Search accessories...';
+        bfWrap.style.display = 'none';
+        si.placeholder = 'Search accessories...';
     } else {
-        brandFilter.style.display = '';
-        searchInput.placeholder = 'Search for a phone...';
+        bfWrap.style.display = '';
+        si.placeholder = 'Search phones...';
     }
 }
 
-// ── Accessories Render ──
+// ── Accessories ──
 let currentAccCat = 'all';
+const catLabels = { earphones:'🎧 Earphones', charger:'🔌 Charger', case:'🛡️ Case', cable:'🔗 Cable', powerbank:'🔋 Power Bank', screenguard:'📲 Screen Guard' };
 
 function filterAcc(cat, el) {
     currentAccCat = cat;
@@ -331,28 +616,20 @@ function renderAccessories(cat = 'all') {
         .filter(a => cat === 'all' || a.category === cat)
         .filter(a => a.name.toLowerCase().includes(search));
 
-    const badge = document.getElementById('accCountBadge');
-    badge.textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
+    document.getElementById('accCountBadge').textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
 
-    const container = document.getElementById('accContainer');
+    const ac = document.getElementById('accContainer');
     if (!filtered.length) {
-        container.innerHTML = `<div class="acc-empty"><span class="ei">📭</span><p>No accessories found</p></div>`;
+        ac.innerHTML = `<div class="acc-empty"><span class="ei">📭</span><p>No accessories found</p></div>`;
         return;
     }
-
-    const catLabels = {
-        earphones: '🎧 Earphones', charger: '🔌 Charger',
-        case: '🛡️ Case', cable: '🔗 Cable',
-        powerbank: '🔋 Power Bank', screenguard: '📲 Screen Guard'
-    };
-
-    container.innerHTML = filtered.map((a, i) => {
+    ac.innerHTML = filtered.map((a, i) => {
         const fmt = '₹' + a.price.toLocaleString('en-IN');
         const oldFmt = a.old_price ? '₹' + a.old_price.toLocaleString('en-IN') : '';
         const msg = `Hello, I'm interested in ${a.name} for ${fmt}`;
         const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
         return `
-        <div class="acc-card" style="animation-delay:${i * 0.05}s">
+        <div class="acc-card" style="animation-delay:${i*0.05}s">
             <span class="cat-tag">${catLabels[a.category] || a.category}</span>
             <div class="img-wrap">
                 <img src="${a.img_url}" alt="${a.name}" loading="lazy"
@@ -360,123 +637,72 @@ function renderAccessories(cat = 'all') {
             </div>
             <h3>${a.name}</h3>
             <div class="acc-price">${fmt}<span class="old">${oldFmt}</span></div>
-            <a href="${waUrl}" target="_blank" class="wa-btn">
+            <a href="${waUrl}" target="_blank" class="wa-btn order">
                 <span>📲</span> Order on WhatsApp
             </a>
         </div>`;
     }).join('');
 }
 
-// ── Search — works for both tabs ──
-document.getElementById("search").addEventListener("input", async e => {
-    const activeTab = document.querySelector('.tab-btn.active').textContent.includes('Accessories') ? 'accessories' : 'phones';
-    if (activeTab === 'accessories') {
-        renderAccessories(currentAccCat);
-    } else {
-        await displayProducts(currentBrand, e.target.value);
-    }
-});
-
-// ── Phones logic (unchanged) ──
+// ── Phones ──
 const FALLBACK = [
-    { id:1, brand:"vivo", name:"Vivo Y31",
-      img_url:"https://via.placeholder.com/150?text=Vivo+Y31",
-      variants:[
-        {ram:4,storage:128,price:12999,stock:true},
-        {ram:6,storage:128,price:14999,stock:true},
-        {ram:8,storage:128,price:16999,stock:false}
-      ]},
-    { id:2, brand:"redmi", name:"Redmi Note 12",
-      img_url:"https://via.placeholder.com/150?text=Redmi+Note+12",
-      variants:[
-        {ram:4,storage:64,price:13999,stock:true},
-        {ram:8,storage:128,price:15999,stock:true},
-        {ram:8,storage:256,price:17999,stock:true}
-      ]},
-    { id:3, brand:"samsung", name:"Samsung A14",
-      img_url:"https://via.placeholder.com/150?text=Samsung+A14",
-      variants:[
-        {ram:4,storage:64,price:11999,stock:true},
-        {ram:6,storage:128,price:13999,stock:false}
-      ]},
-    { id:4, brand:"oppo", name:"Oppo A17",
-      img_url:"https://via.placeholder.com/150?text=Oppo+A17",
-      variants:[
-        {ram:4,storage:64,price:10999,stock:true},
-        {ram:6,storage:128,price:12999,stock:true}
-      ]},
+    { id:1, brand:"vivo",    name:"Vivo Y31",       img_url:"https://via.placeholder.com/150?text=Vivo+Y31",
+      variants:[{ram:4,storage:128,price:12999,stock:true},{ram:6,storage:128,price:14999,stock:true},{ram:8,storage:128,price:16999,stock:false}]},
+    { id:2, brand:"redmi",   name:"Redmi Note 12",  img_url:"https://via.placeholder.com/150?text=Redmi+Note+12",
+      variants:[{ram:4,storage:64,price:13999,stock:true},{ram:8,storage:128,price:15999,stock:true},{ram:8,storage:256,price:17999,stock:true}]},
+    { id:3, brand:"samsung", name:"Samsung A14",    img_url:"https://via.placeholder.com/150?text=Samsung+A14",
+      variants:[{ram:4,storage:64,price:11999,stock:true},{ram:6,storage:128,price:13999,stock:false}]},
+    { id:4, brand:"oppo",    name:"Oppo A17",       img_url:"https://via.placeholder.com/150?text=Oppo+A17",
+      variants:[{ram:4,storage:64,price:10999,stock:true},{ram:6,storage:128,price:12999,stock:true}]},
 ];
 
 let cachedProducts = null;
-
 async function getProducts() {
     if (cachedProducts) return cachedProducts;
     try {
         const res = await fetch(`${API_URL}/products/`);
-        if (!res.ok) throw new Error("API failed");
+        if (!res.ok) throw new Error();
         cachedProducts = await res.json();
         return cachedProducts;
-    } catch (err) {
-        console.log("API failed, using fallback");
-        return FALLBACK;
-    }
+    } catch { return FALLBACK; }
 }
 
-function clearCache() { cachedProducts = null; }
-
-const container = document.getElementById("productContainer");
+const container  = document.getElementById("productContainer");
 const countBadge = document.getElementById("countBadge");
 let currentBrand = "all";
 const selectedVariant = {};
 
-function getImg(p) {
-    return p.img_url || p.img || "https://via.placeholder.com/150?text=" + encodeURIComponent(p.name);
-}
+function getImg(p) { return p.img_url || p.img || "https://via.placeholder.com/150?text=" + encodeURIComponent(p.name); }
 
-function selectVariant(productId, variantIndex) {
-    selectedVariant[productId] = variantIndex;
-    renderCard(productId);
-}
+function selectVariant(productId, idx) { selectedVariant[productId] = idx; renderCard(productId); }
 
 async function renderCard(productId) {
     const products = await getProducts();
     const p = products.find(x => x.id === productId);
     if (!p) return;
-
     const vIdx = selectedVariant[productId] ?? 0;
     const v = p.variants[vIdx];
     const fmt = "₹" + v.price.toLocaleString("en-IN");
     const msg = `Hello, I want to buy ${p.name} (${v.ram}GB RAM / ${v.storage}GB) for ${fmt}`;
     const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
-
     const card = document.getElementById("card_" + productId);
     if (!card) return;
-
     card.querySelector(".price").textContent = fmt;
-
     const badge = card.querySelector(".badge");
     badge.className = "badge " + (v.stock ? "available" : "out");
     badge.innerHTML = `<span class="badge-dot"></span>${v.stock ? "In Stock" : "Out of Stock"}`;
-
     const btn = card.querySelector(".wa-btn");
     if (v.stock) {
-        btn.className = "wa-btn order";
-        btn.href = waUrl;
-        btn.innerHTML = `<span>📲</span> Order on WhatsApp`;
-        btn.style.pointerEvents = "";
+        btn.className = "wa-btn order"; btn.href = waUrl;
+        btn.innerHTML = `<span>📲</span> Order on WhatsApp`; btn.style.pointerEvents = "";
     } else {
-        btn.className = "wa-btn disabled";
-        btn.href = "#";
-        btn.innerHTML = `Not Available`;
-        btn.style.pointerEvents = "none";
+        btn.className = "wa-btn disabled"; btn.href = "#";
+        btn.innerHTML = `Not Available`; btn.style.pointerEvents = "none";
     }
-
     card.querySelectorAll(".vpill").forEach((pill, i) => {
-        const variant = p.variants[i];
-        pill.classList.remove("selected");
-        if (!variant.stock) pill.classList.add("out-pill");
-        else pill.classList.remove("out-pill");
-        if (i === vIdx) pill.classList.add("selected");
+        const vv = p.variants[i];
+        pill.classList.toggle("selected", i === vIdx);
+        pill.classList.toggle("out-pill", !vv.stock);
     });
 }
 
@@ -485,36 +711,29 @@ async function displayProducts(filter = "all", search = "") {
     const filtered = products
         .filter(p => filter === "all" || p.brand === filter)
         .filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
-
     countBadge.textContent = `${filtered.length} phone${filtered.length !== 1 ? 's' : ''}`;
-
     if (!filtered.length) {
         container.innerHTML = `<div class="empty"><span class="ei">📭</span><p>No phones found</p></div>`;
         return;
     }
-
     let html = "";
     filtered.forEach((p, i) => {
         const defaultIdx = p.variants.findIndex(v => v.stock);
-        if (selectedVariant[p.id] === undefined) {
-            selectedVariant[p.id] = defaultIdx >= 0 ? defaultIdx : 0;
-        }
+        if (selectedVariant[p.id] === undefined) selectedVariant[p.id] = defaultIdx >= 0 ? defaultIdx : 0;
         const vIdx = selectedVariant[p.id];
         const v = p.variants[vIdx];
         const fmt = "₹" + v.price.toLocaleString("en-IN");
         const msg = `Hello, I want to buy ${p.name} (${v.ram}GB RAM / ${v.storage}GB) for ${fmt}`;
         const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
         const imgSrc = getImg(p);
-
         const pillsHtml = p.variants.map((vv, vi) => `
-            <div class="vpill ${vi === vIdx ? 'selected' : ''} ${!vv.stock ? 'out-pill' : ''}"
-                 onclick="${!vv.stock ? '' : 'selectVariant(' + p.id + ',' + vi + ')'}"
-                 title="${!vv.stock ? 'Out of Stock' : ''}">
+            <div class="vpill ${vi===vIdx?'selected':''} ${!vv.stock?'out-pill':''}"
+                 onclick="${!vv.stock?'':'selectVariant('+p.id+','+vi+')'}"
+                 title="${!vv.stock?'Out of Stock':''}">
                 ${vv.ram}/${vv.storage}GB
             </div>`).join('');
-
         html += `
-        <div class="card" id="card_${p.id}" style="animation-delay:${i * 0.06}s">
+        <div class="card" id="card_${p.id}" style="animation-delay:${i*0.06}s">
             <span class="brand-tag">${p.brand}</span>
             <div class="img-wrap">
                 <img src="${imgSrc}" alt="${p.name}" loading="lazy"
@@ -526,19 +745,17 @@ async function displayProducts(filter = "all", search = "") {
                 <p class="price">${fmt}</p>
                 <span class="price-note">incl. taxes</span>
             </div>
-            <span class="badge ${v.stock ? 'available' : 'out'}">
-                <span class="badge-dot"></span>
-                ${v.stock ? 'In Stock' : 'Out of Stock'}
+            <span class="badge ${v.stock?'available':'out'}">
+                <span class="badge-dot"></span>${v.stock?'In Stock':'Out of Stock'}
             </span>
-            <a href="${v.stock ? waUrl : '#'}" target="_blank"
-               class="wa-btn ${v.stock ? 'order' : 'disabled'}"
-               style="${!v.stock ? 'pointer-events:none' : ''}">
-                <span>${v.stock ? '📲' : ''}</span>
-                ${v.stock ? 'Order on WhatsApp' : 'Not Available'}
+            <a href="${v.stock?waUrl:'#'}" target="_blank"
+               class="wa-btn ${v.stock?'order':'disabled'}"
+               style="${!v.stock?'pointer-events:none':''}">
+                <span>${v.stock?'📲':''}</span>
+                ${v.stock?'Order on WhatsApp':'Not Available'}
             </a>
         </div>`;
     });
-
     container.innerHTML = html;
 }
 
@@ -549,7 +766,12 @@ async function filterBrand(brand, el) {
     await displayProducts(currentBrand, document.getElementById("search").value);
 }
 
-// Init
+document.getElementById("search").addEventListener("input", async e => {
+    const isAcc = document.querySelector('.tab-btn.active').textContent.includes('Accessories');
+    if (isAcc) renderAccessories(currentAccCat);
+    else await displayProducts(currentBrand, e.target.value);
+});
+
 displayProducts();
 renderAccessories();
 </script>
