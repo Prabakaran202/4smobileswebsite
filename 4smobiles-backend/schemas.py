@@ -67,6 +67,15 @@ class AccessoryBase(BaseModel):
     old_price: Optional[int] = None
     img_url:   Optional[str] = None
 
+
+
+class AccessoryBase(BaseModel):
+    category:  str
+    name:      str
+    price:     int
+    old_price: Optional[int] = None
+    img_url:   Optional[str] = None
+
 class AccessoryCreate(AccessoryBase):
     pass
 
