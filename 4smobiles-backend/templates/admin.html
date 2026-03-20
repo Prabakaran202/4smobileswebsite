@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4S Mobile \u2014 Admin</title>
+<title>4S Mobile Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -143,19 +143,19 @@ nav h1 em{font-style:normal;color:var(--accent)}
 <!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
-    <div class="logo">\ud83d\udd10</div>
+    <div class="logo"></div>
     <h2>Admin Login</h2>
-    <p>4S Mobile \u2014 Staff Only</p>
+    <p>4S Mobile Staff Only</p>
     <input type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
-    <button onclick="doLogin()" id="loginBtn">Login \u2192</button>
-    <div class="login-err" id="loginErr">\u274c Wrong password</div>
+    <button onclick="doLogin()" id="loginBtn">Login </button>
+    <div class="login-err" id="loginErr"> Wrong password</div>
   </div>
 </div>
 
 <!-- NAV -->
 <nav>
   <div class="nav-left">
-    <div class="nav-icon">\ud83d\udcf1</div>
+    <div class="nav-icon"></div>
     <h1>4S <em>Mobile</em></h1>
     <span class="nav-badge">ADMIN</span>
   </div>
@@ -167,8 +167,8 @@ nav h1 em{font-style:normal;color:var(--accent)}
 
 <!-- TABS -->
 <div class="admin-tabs">
-  <button class="atab active" onclick="switchAdminTab('phones',this)">\ud83d\udcf1 Phones</button>
-  <button class="atab" onclick="switchAdminTab('accessories',this)">\ud83c\udfa7 Accessories</button>
+  <button class="atab active" onclick="switchAdminTab('phones',this)"> Phones</button>
+  <button class="atab" onclick="switchAdminTab('accessories',this)">Accessories</button>
 </div>
 
 <!-- MAIN -->
@@ -208,7 +208,7 @@ nav h1 em{font-style:normal;color:var(--accent)}
       </div>
       <div class="variants-head">
         <span>Variants (RAM / Storage / Price)</span>
-        <button class="btn-add-variant" onclick="addVariantRow()">\u2795 Add Variant</button>
+        <button class="btn-add-variant" onclick="addVariantRow()"> Add Variant</button>
       </div>
       <div id="variantRows"></div>
       <div class="form-actions">
@@ -218,7 +218,7 @@ nav h1 em{font-style:normal;color:var(--accent)}
     </div>
     <div class="sec-head">
       <h2>All Phones</h2>
-      <button class="btn-primary" onclick="openAddPhoneForm()">\u2795 Add Phone</button>
+      <button class="btn-primary" onclick="openAddPhoneForm()"> Add Phone</button>
     </div>
     <div id="productList"></div>
   </div>
@@ -226,17 +226,17 @@ nav h1 em{font-style:normal;color:var(--accent)}
   <!-- ACCESSORIES PANEL -->
   <div class="admin-panel" id="panel-accessories">
     <div class="form-card" id="accFormCard" style="display:none">
-      <h3 id="accFormTitle">\u2795 Add Accessory</h3>
+      <h3 id="accFormTitle"> Add Accessory</h3>
       <div class="form-grid">
         <div class="field">
           <label>Category</label>
           <select id="aCategory">
-            <option value="earphones">\ud83c\udfa7 Earphones</option>
-            <option value="charger">\ud83d\udd0c Charger</option>
-            <option value="case">\ud83d\udee1\ufe0f Case</option>
-            <option value="cable">\ud83d\udd17 Cable</option>
-            <option value="powerbank">\ud83d\udd0b Power Bank</option>
-            <option value="screenguard">\ud83d\udcf2 Screen Guard</option>
+            <option value="earphones">\ Earphones</option>
+            <option value="charger">Charger</option>
+            <option value="case"> Case</option>
+            <option value="cable"> Cable</option>
+            <option value="powerbank"> Power Bank</option>
+            <option value="screenguard">Screen Guard</option>
           </select>
         </div>
         <div class="field">
