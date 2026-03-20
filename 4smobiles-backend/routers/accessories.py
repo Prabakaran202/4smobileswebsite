@@ -28,3 +28,10 @@ def get_accessory(acc_id: int, db: Session = Depends(get_db)):
     if not acc:
         raise HTTPException(status_code=404, detail="Accessory not found")
     return acc
+@router.post("/", response_model=schemas.AccessoryOut)
+def create_accessory(acc: schemas.AccessoryCreate, db: Session = Depends(get_db)):
+    new_acc = models.Accessory(**acc.dict())
+    db.add(new_acc)
+    db.commit()
+    db.refresh(new_acc)
+    return new_acc
