@@ -55,7 +55,11 @@ def create_product(body: schemas.ProductCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(product)
     return product
-
+@router.post("/accessories", response_model=schemas.AccessoryOut, dependencies=[Depends(verify_token)])
+def create_accessory(body: schemas.AccessoryCreate, db: Session = Depends(get_db)):
+    acc = models.Accessory(**body.model_dump())
+    db.add(acc); db.commit(); db.refresh(acc)
+    return acc
 
 @router.put("/products/{product_id}", response_model=schemas.ProductOut, dependencies=[Depends(verify_token)])
 def update_product(product_id: int, body: schemas.ProductUpdate, db: Session = Depends(get_db)):
@@ -124,11 +128,7 @@ from typing import List
 def list_accessories(db: Session = Depends(get_db)):
     return db.query(models.Accessory).all()
 
-@router.post("/accessories", response_model=schemas.AccessoryOut, dependencies=[Depends(verify_token)])
-def create_accessory(body: schemas.AccessoryCreate, db: Session = Depends(get_db)):
-    acc = models.Accessory(**body.model_dump())
-    db.add(acc); db.commit(); db.refresh(acc)
-    return acc
+
 
 @router.put("/accessories/{acc_id}", response_model=schemas.AccessoryOut, dependencies=[Depends(verify_token)])
 def update_accessory(acc_id: int, body: schemas.AccessoryUpdate, db: Session = Depends(get_db)):
