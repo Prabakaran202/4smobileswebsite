@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine  # ❌ missing!
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 import os
 from dotenv import load_dotenv
@@ -6,11 +6,24 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./4smobiles.db")
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
+
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {},
+    echo=True,
+    future=True
+)
+
+SessionLocal = sessionmaker(
+    bind=engine,
+    autocommit=False,
+    autoflush=False,
+    expire_on_commit=False
+)
 
 class Base(DeclarativeBase):
     pass
+
 
 def get_db():
     db = SessionLocal()
