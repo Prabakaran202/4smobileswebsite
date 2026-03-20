@@ -60,3 +60,24 @@ class AdminLogin(BaseModel):
 class TokenOut(BaseModel):
     access_token: str
     token_type:   str = "bearer"
+class AccessoryBase(BaseModel):
+    category:  str
+    name:      str
+    price:     int
+    old_price: Optional[int] = None
+    img_url:   Optional[str] = None
+
+class AccessoryCreate(AccessoryBase):
+    pass
+
+class AccessoryUpdate(BaseModel):
+    category:  Optional[str] = None
+    name:      Optional[str] = None
+    price:     Optional[int] = None
+    old_price: Optional[int] = None
+    img_url:   Optional[str] = None
+
+class AccessoryOut(AccessoryBase):
+    id: int
+    class Config:
+        from_attributes = True
