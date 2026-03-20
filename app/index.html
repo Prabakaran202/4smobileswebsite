@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4S Mobile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet ">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,7 +25,7 @@
         <li onclick="filterBrand('samsung',this)">Samsung</li>
         <li onclick="filterBrand('redmi',this)">Redmi</li>
         <li onclick="filterBrand('realme',this)">Realme</li>
-<li onclick="filterBrand('MOTOROLA',this)">Motorola</li>
+        <li onclick="filterBrand('motorola',this)">Motorola</li>
     </ul>
 </nav>
 
@@ -37,61 +37,75 @@
 <div class="container" id="productContainer"></div>
 
 <script>
-    const whatsappNumber = "+919940714583";
+const whatsappNumber = "+919940714583";
 const API_URL = "https://foursmobileswebsite.onrender.com";
-// then fetch line:
 
 const FALLBACK = [
-    { id:1, brand:"vivo", name:"Vivo Y31", img:"https://via.placeholder.com/150?text=Vivo+Y31",
+    { id:1, brand:"vivo", name:"Vivo Y31",
+      img_url:"https://via.placeholder.com/150?text=Vivo+Y31",
       variants:[
         {ram:4,storage:128,price:12999,stock:true},
         {ram:6,storage:128,price:14999,stock:true},
         {ram:8,storage:128,price:16999,stock:false}
       ]},
-    { id:2, brand:"redmi", name:"Redmi Note 12", img:"https://via.placeholder.com/150?text=Redmi+Note+12",
+    { id:2, brand:"redmi", name:"Redmi Note 12",
+      img_url:"https://via.placeholder.com/150?text=Redmi+Note+12",
       variants:[
         {ram:4,storage:64,price:13999,stock:true},
         {ram:8,storage:128,price:15999,stock:true},
         {ram:8,storage:256,price:17999,stock:true}
       ]},
-    { id:3, brand:"samsung", name:"Samsung A14", img:"https://via.placeholder.com/150?text=Samsung+A14",
+    { id:3, brand:"samsung", name:"Samsung A14",
+      img_url:"https://via.placeholder.com/150?text=Samsung+A14",
       variants:[
         {ram:4,storage:64,price:11999,stock:true},
         {ram:6,storage:128,price:13999,stock:false}
       ]},
-    { id:4, brand:"oppo", name:"Oppo A17", img:"https://via.placeholder.com/150?text=Oppo+A17",
+    { id:4, brand:"oppo", name:"Oppo A17",
+      img_url:"https://via.placeholder.com/150?text=Oppo+A17",
       variants:[
         {ram:4,storage:64,price:10999,stock:true},
         {ram:6,storage:128,price:12999,stock:true}
       ]},
 ];
 
+let cachedProducts = null;
+
 async function getProducts() {
+    if (cachedProducts) return cachedProducts;
     try {
         const res = await fetch(`${API_URL}/products/`);
         if (!res.ok) throw new Error("API failed");
-        return await res.json();
+        cachedProducts = await res.json();
+        return cachedProducts;
     } catch (err) {
         console.log("API failed, using fallback");
         return FALLBACK;
     }
 }
 
+// Cache clear பண்ண — filter/search-ல fresh data வேணும்னா
+function clearCache() { cachedProducts = null; }
+
 const container = document.getElementById("productContainer");
 const countBadge = document.getElementById("countBadge");
 let currentBrand = "all";
-
 const selectedVariant = {};
 
-function selectVariant(productId, variantIndex){
+function getImg(p) {
+    // API-ல img_url, fallback-ல img_url — both handle
+    return p.img_url || p.img || "https://via.placeholder.com/150?text=" + encodeURIComponent(p.name);
+}
+
+function selectVariant(productId, variantIndex) {
     selectedVariant[productId] = variantIndex;
     renderCard(productId);
 }
 
-async function renderCard(productId){
+async function renderCard(productId) {
     const products = await getProducts();
     const p = products.find(x => x.id === productId);
-    if(!p) return;
+    if (!p) return;
 
     const vIdx = selectedVariant[productId] ?? 0;
     const v = p.variants[vIdx];
@@ -100,7 +114,7 @@ async function renderCard(productId){
     const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
 
     const card = document.getElementById("card_" + productId);
-    if(!card) return;
+    if (!card) return;
 
     card.querySelector(".price").textContent = fmt;
 
@@ -109,7 +123,7 @@ async function renderCard(productId){
     badge.innerHTML = `<span class="badge-dot"></span>${v.stock ? "In Stock" : "Out of Stock"}`;
 
     const btn = card.querySelector(".wa-btn");
-    if(v.stock){
+    if (v.stock) {
         btn.className = "wa-btn order";
         btn.href = waUrl;
         btn.innerHTML = `<span>📲</span> Order on WhatsApp`;
@@ -121,25 +135,24 @@ async function renderCard(productId){
         btn.style.pointerEvents = "none";
     }
 
-    const pills = card.querySelectorAll(".vpill");
-    pills.forEach((pill, i) => {
+    card.querySelectorAll(".vpill").forEach((pill, i) => {
         const variant = p.variants[i];
         pill.classList.remove("selected");
-        if(!variant.stock) pill.classList.add("out-pill");
+        if (!variant.stock) pill.classList.add("out-pill");
         else pill.classList.remove("out-pill");
-        if(i === vIdx) pill.classList.add("selected");
+        if (i === vIdx) pill.classList.add("selected");
     });
 }
 
-async function displayProducts(filter="all", search=""){
+async function displayProducts(filter = "all", search = "") {
     const products = await getProducts();
     const filtered = products
-        .filter(p => filter==="all" || p.brand===filter)
+        .filter(p => filter === "all" || p.brand === filter)
         .filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
 
-    countBadge.textContent = `${filtered.length} phone${filtered.length!==1?'s':''}`;
+    countBadge.textContent = `${filtered.length} phone${filtered.length !== 1 ? 's' : ''}`;
 
-    if(!filtered.length){
+    if (!filtered.length) {
         container.innerHTML = `<div class="empty"><span class="ei">📭</span><p>No phones found</p></div>`;
         return;
     }
@@ -147,7 +160,7 @@ async function displayProducts(filter="all", search=""){
     let html = "";
     filtered.forEach((p, i) => {
         const defaultIdx = p.variants.findIndex(v => v.stock);
-        if(selectedVariant[p.id] === undefined){
+        if (selectedVariant[p.id] === undefined) {
             selectedVariant[p.id] = defaultIdx >= 0 ? defaultIdx : 0;
         }
         const vIdx = selectedVariant[p.id];
@@ -155,20 +168,21 @@ async function displayProducts(filter="all", search=""){
         const fmt = "₹" + v.price.toLocaleString("en-IN");
         const msg = `Hello, I want to buy ${p.name} (${v.ram}GB RAM / ${v.storage}GB) for ${fmt}`;
         const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
+        const imgSrc = getImg(p);
 
         const pillsHtml = p.variants.map((vv, vi) => `
-            <div class="vpill ${vi===vIdx?'selected':''} ${!vv.stock?'out-pill':''}"
-                 onclick="${!vv.stock?'':'selectVariant('+p.id+','+vi+')'}"
-                 title="${!vv.stock?'Out of Stock':''}">
+            <div class="vpill ${vi === vIdx ? 'selected' : ''} ${!vv.stock ? 'out-pill' : ''}"
+                 onclick="${!vv.stock ? '' : 'selectVariant(' + p.id + ',' + vi + ')'}"
+                 title="${!vv.stock ? 'Out of Stock' : ''}">
                 ${vv.ram}/${vv.storage}GB
-            </div>
-        `).join('');
+            </div>`).join('');
 
         html += `
-        <div class="card" id="card_${p.id}" style="animation-delay:${i*0.06}s">
+        <div class="card" id="card_${p.id}" style="animation-delay:${i * 0.06}s">
             <span class="brand-tag">${p.brand}</span>
             <div class="img-wrap">
-                <img src="${p.img}" alt="${p.name}" loading="lazy">
+                <img src="${imgSrc}" alt="${p.name}" loading="lazy"
+                     onerror="this.src='https://via.placeholder.com/150?text=${encodeURIComponent(p.name)}'">
             </div>
             <h3>${p.name}</h3>
             <div class="variant-pills">${pillsHtml}</div>
@@ -176,15 +190,15 @@ async function displayProducts(filter="all", search=""){
                 <p class="price">${fmt}</p>
                 <span class="price-note">incl. taxes</span>
             </div>
-            <span class="badge ${v.stock?'available':'out'}">
+            <span class="badge ${v.stock ? 'available' : 'out'}">
                 <span class="badge-dot"></span>
                 ${v.stock ? 'In Stock' : 'Out of Stock'}
             </span>
-            <a href="${v.stock?waUrl:'#'}" target="_blank"
-               class="wa-btn ${v.stock?'order':'disabled'}"
-               style="${!v.stock?'pointer-events:none':''}">
-                <span>${v.stock?'📲':''}</span>
-                ${v.stock?'Order on WhatsApp':'Not Available'}
+            <a href="${v.stock ? waUrl : '#'}" target="_blank"
+               class="wa-btn ${v.stock ? 'order' : 'disabled'}"
+               style="${!v.stock ? 'pointer-events:none' : ''}">
+                <span>${v.stock ? '📲' : ''}</span>
+                ${v.stock ? 'Order on WhatsApp' : 'Not Available'}
             </a>
         </div>`;
     });
@@ -192,7 +206,7 @@ async function displayProducts(filter="all", search=""){
     container.innerHTML = html;
 }
 
-async function filterBrand(brand, el){
+async function filterBrand(brand, el) {
     currentBrand = brand;
     document.querySelectorAll("#brandFilter li").forEach(li => li.classList.remove("active"));
     el.classList.add("active");
@@ -204,7 +218,6 @@ document.getElementById("search").addEventListener("input", async e => {
 });
 
 displayProducts();
-    
 </script>
 </body>
 </html>
