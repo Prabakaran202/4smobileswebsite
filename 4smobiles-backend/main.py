@@ -12,7 +12,7 @@ app = FastAPI(title="4S Mobile API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://4smobiles.netlify.app"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
