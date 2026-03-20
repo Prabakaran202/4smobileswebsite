@@ -61,6 +61,10 @@ def create_accessory(body: schemas.AccessoryCreate, db: Session = Depends(get_db
     db.add(acc); db.commit(); db.refresh(acc)
     return acc
 
+@router.get("/accessories", response_model=List[schemas.AccessoryOut], dependencies=[Depends(verify_token)])
+def list_accessories(db: Session = Depends(get_db)):
+    return db.query(models.Accessory).all()
+
 @router.put("/products/{product_id}", response_model=schemas.ProductOut, dependencies=[Depends(verify_token)])
 def update_product(product_id: int, body: schemas.ProductUpdate, db: Session = Depends(get_db)):
     product = db.query(models.Product).filter(models.Product.id == product_id).first()
@@ -123,12 +127,6 @@ def delete_variant(variant_id: int, db: Session = Depends(get_db)):
     return {"message": "Deleted"}
 # ── Accessories CRUD ──
 from typing import List
-
-@router.get("/accessories", response_model=List[schemas.AccessoryOut], dependencies=[Depends(verify_token)])
-def list_accessories(db: Session = Depends(get_db)):
-    return db.query(models.Accessory).all()
-
-
 
 @router.put("/accessories/{acc_id}", response_model=schemas.AccessoryOut, dependencies=[Depends(verify_token)])
 def update_accessory(acc_id: int, body: schemas.AccessoryUpdate, db: Session = Depends(get_db)):
