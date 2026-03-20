@@ -27,3 +27,12 @@ class Variant(Base):
     stock      = Column(Boolean, default=True)
 
     product = relationship("Product", back_populates="variants")
+class Accessory(Base):
+    __tablename__ = "accessories"
+
+    id        = Column(Integer, primary_key=True, index=True)
+    category  = Column(String, nullable=False)
+    name      = Column(String, nullable=False)
+    price     = Column(Integer, nullable=False)
+    old_price = Column(Integer, nullable=True)
+    img_url   = Column(String, nullable=True)
