@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredential
+from typing import List
 from sqlalchemy.orm import Session
 import jwt, os
 from datetime import datetime, timedelta
