@@ -3,10 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
     <title>4S Mobile</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Accessories Section ── */
+        .section-tabs {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem 0;
+            border-bottom: 2px solid #f0f0f0;
+            background: #fff;
+            position: sticky;
+            top: 72px;
+            z-index: 90;
+        }
+        .tab-btn {
+            padding: 0.55rem 1.4rem;
+            border: none;
+            background: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #999;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .tab-btn.active {
+            color: #111;
+            border-bottom-color: #111;
+        }
+        .tab-btn:hover:not(.active) { color: #555; }
+
+        /* accessories category filter */
+        .acc-filter {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            padding: 1rem 1.5rem;
+            background: #fafafa;
+            border-bottom: 1px solid #ebebeb;
+        }
+        .acc-filter span {
+            padding: 0.35rem 1rem;
+            border-radius: 999px;
+            border: 1.5px solid #ddd;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            background: #fff;
+            color: #555;
+            transition: all 0.18s;
+        }
+        .acc-filter span.active {
+            background: #111;
+            color: #fff;
+            border-color: #111;
+        }
+
+        /* acc card tweaks */
+        .acc-card {
+            border-radius: 18px;
+            background: #fff;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            animation: fadeUp 0.4s ease both;
+            position: relative;
+            overflow: hidden;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .acc-card .cat-tag {
+            position: absolute;
+            top: 0.85rem;
+            left: 0.85rem;
+            background: #f3f3f3;
+            color: #555;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+        .acc-card .img-wrap {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #f8f8f8;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .acc-card .img-wrap img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+        .acc-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #111;
+            line-height: 1.3;
+            margin-top: 0.25rem;
+        }
+        .acc-card .acc-price {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #111;
+        }
+        .acc-card .acc-price .old {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #bbb;
+            text-decoration: line-through;
+            margin-left: 6px;
+        }
+        .acc-card .wa-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #25d366;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            padding: 0.6rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            margin-top: 0.25rem;
+            transition: opacity 0.2s;
+        }
+        .acc-card .wa-btn:hover { opacity: 0.88; }
+
+        /* hidden sections */
+        .section-panel { display: none; }
+        .section-panel.active { display: block; }
+
+        .acc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 1.2rem;
+            padding: 1.5rem;
+        }
+
+        .acc-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #bbb;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .acc-empty .ei { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+    </style>
 </head>
 <body>
 
@@ -17,7 +179,7 @@
     </div>
     <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input type="text" id="search" placeholder="Search for a phone...">
+        <input type="text" id="search" placeholder="Search phones...">
     </div>
     <ul id="brandFilter">
         <li class="active" onclick="filterBrand('all',this)">All</li>
@@ -30,17 +192,192 @@
     </ul>
 </nav>
 
-<div class="hero-strip">
-    <h2>Available Phones</h2>
-    <span id="countBadge">0 phones</span>
+<!-- Section Tabs -->
+<div class="section-tabs">
+    <button class="tab-btn active" onclick="switchTab('phones', this)">📱 Phones</button>
+    <button class="tab-btn" onclick="switchTab('accessories', this)">🎧 Accessories</button>
 </div>
 
-<div class="container" id="productContainer"></div>
+<!-- PHONES PANEL -->
+<div class="section-panel active" id="panel-phones">
+    <div class="hero-strip">
+        <h2>Available Phones</h2>
+        <span id="countBadge">0 phones</span>
+    </div>
+    <div class="container" id="productContainer"></div>
+</div>
+
+<!-- ACCESSORIES PANEL -->
+<div class="section-panel" id="panel-accessories">
+    <div class="hero-strip">
+        <h2>Accessories</h2>
+        <span id="accCountBadge">0 items</span>
+    </div>
+
+    <!-- Category filter -->
+    <div class="acc-filter">
+        <span class="active" onclick="filterAcc('all', this)">All</span>
+        <span onclick="filterAcc('earphones', this)">🎧 Earphones</span>
+        <span onclick="filterAcc('charger', this)">🔌 Chargers</span>
+        <span onclick="filterAcc('case', this)">🛡️ Cases</span>
+        <span onclick="filterAcc('cable', this)">🔗 Cables</span>
+        <span onclick="filterAcc('powerbank', this)">🔋 Power Banks</span>
+        <span onclick="filterAcc('screenguard', this)">📲 Screen Guards</span>
+    </div>
+
+    <div class="acc-grid" id="accContainer"></div>
+</div>
 
 <script>
 const whatsappNumber = "+919940714583";
 const API_URL = "https://foursmobileswebsite.onrender.com";
 
+// ── Accessories Data ──
+const ACCESSORIES = [
+    {
+        id: "a1", category: "earphones", name: "boAt Bassheads 100",
+        img_url: "https://via.placeholder.com/150?text=boAt+100",
+        price: 299, old_price: 599,
+    },
+    {
+        id: "a2", category: "earphones", name: "JBL C100SI Wired",
+        img_url: "https://via.placeholder.com/150?text=JBL+C100SI",
+        price: 599, old_price: 999,
+    },
+    {
+        id: "a3", category: "charger", name: "65W Super Charger (Type-C)",
+        img_url: "https://via.placeholder.com/150?text=65W+Charger",
+        price: 499, old_price: 799,
+    },
+    {
+        id: "a4", category: "charger", name: "20W iPhone Fast Charger",
+        img_url: "https://via.placeholder.com/150?text=20W+Charger",
+        price: 399, old_price: 699,
+    },
+    {
+        id: "a5", category: "case", name: "Transparent Slim Case",
+        img_url: "https://via.placeholder.com/150?text=Slim+Case",
+        price: 149, old_price: 299,
+    },
+    {
+        id: "a6", category: "case", name: "Shockproof Armour Case",
+        img_url: "https://via.placeholder.com/150?text=Armour+Case",
+        price: 249, old_price: 499,
+    },
+    {
+        id: "a7", category: "cable", name: "Type-C Braided Cable 1m",
+        img_url: "https://via.placeholder.com/150?text=TypeC+Cable",
+        price: 199, old_price: 399,
+    },
+    {
+        id: "a8", category: "cable", name: "Lightning Cable (1m)",
+        img_url: "https://via.placeholder.com/150?text=Lightning+Cable",
+        price: 249, old_price: 449,
+    },
+    {
+        id: "a9", category: "powerbank", name: "10000mAh Power Bank",
+        img_url: "https://via.placeholder.com/150?text=10000mAh",
+        price: 799, old_price: 1299,
+    },
+    {
+        id: "a10", category: "powerbank", name: "20000mAh Fast Charge PB",
+        img_url: "https://via.placeholder.com/150?text=20000mAh",
+        price: 1299, old_price: 1999,
+    },
+    {
+        id: "a11", category: "screenguard", name: "Tempered Glass (Universal)",
+        img_url: "https://via.placeholder.com/150?text=Tempered+Glass",
+        price: 99, old_price: 199,
+    },
+    {
+        id: "a12", category: "screenguard", name: "Privacy Screen Protector",
+        img_url: "https://via.placeholder.com/150?text=Privacy+Guard",
+        price: 149, old_price: 299,
+    },
+];
+
+// ── Tab Switcher ──
+function switchTab(tab, el) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + tab).classList.add('active');
+
+    // hide brand filter when accessories tab
+    const brandFilter = document.getElementById('brandFilter');
+    const searchInput = document.getElementById('search');
+    if (tab === 'accessories') {
+        brandFilter.style.display = 'none';
+        searchInput.placeholder = 'Search accessories...';
+    } else {
+        brandFilter.style.display = '';
+        searchInput.placeholder = 'Search for a phone...';
+    }
+}
+
+// ── Accessories Render ──
+let currentAccCat = 'all';
+
+function filterAcc(cat, el) {
+    currentAccCat = cat;
+    document.querySelectorAll('.acc-filter span').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+    renderAccessories(cat);
+}
+
+function renderAccessories(cat = 'all') {
+    const search = document.getElementById('search').value.toLowerCase();
+    const filtered = ACCESSORIES
+        .filter(a => cat === 'all' || a.category === cat)
+        .filter(a => a.name.toLowerCase().includes(search));
+
+    const badge = document.getElementById('accCountBadge');
+    badge.textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
+
+    const container = document.getElementById('accContainer');
+    if (!filtered.length) {
+        container.innerHTML = `<div class="acc-empty"><span class="ei">📭</span><p>No accessories found</p></div>`;
+        return;
+    }
+
+    const catLabels = {
+        earphones: '🎧 Earphones', charger: '🔌 Charger',
+        case: '🛡️ Case', cable: '🔗 Cable',
+        powerbank: '🔋 Power Bank', screenguard: '📲 Screen Guard'
+    };
+
+    container.innerHTML = filtered.map((a, i) => {
+        const fmt = '₹' + a.price.toLocaleString('en-IN');
+        const oldFmt = a.old_price ? '₹' + a.old_price.toLocaleString('en-IN') : '';
+        const msg = `Hello, I'm interested in ${a.name} for ${fmt}`;
+        const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
+        return `
+        <div class="acc-card" style="animation-delay:${i * 0.05}s">
+            <span class="cat-tag">${catLabels[a.category] || a.category}</span>
+            <div class="img-wrap">
+                <img src="${a.img_url}" alt="${a.name}" loading="lazy"
+                     onerror="this.src='https://via.placeholder.com/150?text=${encodeURIComponent(a.name)}'">
+            </div>
+            <h3>${a.name}</h3>
+            <div class="acc-price">${fmt}<span class="old">${oldFmt}</span></div>
+            <a href="${waUrl}" target="_blank" class="wa-btn">
+                <span>📲</span> Order on WhatsApp
+            </a>
+        </div>`;
+    }).join('');
+}
+
+// ── Search — works for both tabs ──
+document.getElementById("search").addEventListener("input", async e => {
+    const activeTab = document.querySelector('.tab-btn.active').textContent.includes('Accessories') ? 'accessories' : 'phones';
+    if (activeTab === 'accessories') {
+        renderAccessories(currentAccCat);
+    } else {
+        await displayProducts(currentBrand, e.target.value);
+    }
+});
+
+// ── Phones logic (unchanged) ──
 const FALLBACK = [
     { id:1, brand:"vivo", name:"Vivo Y31",
       img_url:"https://via.placeholder.com/150?text=Vivo+Y31",
@@ -85,7 +422,6 @@ async function getProducts() {
     }
 }
 
-// Cache clear பண்ண — filter/search-ல fresh data வேணும்னா
 function clearCache() { cachedProducts = null; }
 
 const container = document.getElementById("productContainer");
@@ -94,7 +430,6 @@ let currentBrand = "all";
 const selectedVariant = {};
 
 function getImg(p) {
-    // API-ல img_url, fallback-ல img_url — both handle
     return p.img_url || p.img || "https://via.placeholder.com/150?text=" + encodeURIComponent(p.name);
 }
 
@@ -214,11 +549,9 @@ async function filterBrand(brand, el) {
     await displayProducts(currentBrand, document.getElementById("search").value);
 }
 
-document.getElementById("search").addEventListener("input", async e => {
-    await displayProducts(currentBrand, e.target.value);
-});
-
+// Init
 displayProducts();
+renderAccessories();
 </script>
 </body>
 </html>
