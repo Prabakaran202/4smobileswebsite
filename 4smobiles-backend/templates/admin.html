@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4S Mobile — Admin</title>
+<title>4S Mobile \u2014 Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -17,7 +17,6 @@
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;
   background-image:radial-gradient(rgba(37,211,102,0.05) 1px,transparent 1px);background-size:28px 28px;}
 
-/* LOGIN */
 #loginScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;
   background-image:radial-gradient(rgba(37,211,102,0.05) 1px,transparent 1px);background-size:28px 28px;}
 .login-box{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:40px 36px;width:100%;max-width:360px;text-align:center;box-shadow:0 0 60px rgba(37,211,102,0.08);}
@@ -30,7 +29,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .login-box button:hover{box-shadow:0 4px 20px rgba(37,211,102,0.4);transform:scale(1.02)}
 .login-err{color:var(--red);font-size:0.78rem;margin-top:8px;display:none}
 
-/* NAV */
 nav{background:rgba(7,8,15,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
 .nav-left{display:flex;align-items:center;gap:10px}
 .nav-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--accent-dim));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 0 14px var(--glow);}
@@ -42,28 +40,23 @@ nav h1 em{font-style:normal;color:var(--accent)}
 .logout-btn{padding:7px 16px;border-radius:8px;border:1px solid var(--border);background:var(--pill);color:var(--muted);cursor:pointer;font-size:0.8rem;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
 .logout-btn:hover{border-color:var(--red);color:var(--red)}
 
-/* ADMIN TABS */
 .admin-tabs{display:flex;gap:0;padding:0 28px;border-bottom:1px solid var(--border);background:rgba(7,8,15,0.7);}
 .atab{padding:12px 22px;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;transition:all 0.2s;}
 .atab:hover{color:var(--accent)}
 .atab.active{color:var(--accent);border-bottom-color:var(--accent)}
 
-/* MAIN */
 .main{max-width:1000px;margin:0 auto;padding:28px 20px 60px}
 
-/* STATS */
 .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-bottom:28px}
 .stat-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;}
 .stat-box .sv{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent)}
 .stat-box .sl{font-size:0.72rem;color:var(--muted);margin-top:3px;letter-spacing:0.5px;text-transform:uppercase}
 
-/* SEC HEAD */
 .sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
 .sec-head h2{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
 .btn-primary{display:flex;align-items:center;gap:7px;padding:9px 18px;background:linear-gradient(135deg,#25d366,#1aad52);color:#000;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;border:none;border-radius:10px;cursor:pointer;transition:all 0.2s;}
 .btn-primary:hover{box-shadow:0 4px 18px rgba(37,211,102,0.4);transform:scale(1.02)}
 
-/* FORM CARD */
 .form-card{background:var(--card);border:1px solid var(--border2);border-radius:18px;padding:24px;margin-bottom:28px;animation:slideDown 0.3s ease;}
 @keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 .form-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
@@ -80,7 +73,6 @@ nav h1 em{font-style:normal;color:var(--accent)}
 .btn-cancel{padding:11px 20px;background:var(--pill);border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.88rem;border-radius:10px;cursor:pointer;transition:all 0.2s;}
 .btn-cancel:hover{border-color:var(--red);color:var(--red)}
 
-/* VARIANTS */
 .variants-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .variants-head span{font-size:0.72rem;font-weight:600;color:var(--muted);letter-spacing:0.8px;text-transform:uppercase;}
 .btn-add-variant{display:flex;align-items:center;gap:5px;padding:6px 13px;background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.3);color:var(--accent);border-radius:8px;cursor:pointer;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
@@ -96,7 +88,6 @@ nav h1 em{font-style:normal;color:var(--accent)}
 .stock-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.78rem;color:var(--muted);user-select:none;}
 .stock-toggle input{width:auto;cursor:pointer;accent-color:var(--accent)}
 
-/* PRODUCT CARDS */
 .product-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:14px;transition:border-color 0.2s,box-shadow 0.2s;animation:fadeUp 0.35s ease both;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .product-card:hover{border-color:rgba(37,211,102,0.3);box-shadow:0 4px 20px rgba(37,211,102,0.07)}
@@ -122,7 +113,6 @@ nav h1 em{font-style:normal;color:var(--accent)}
 .variant-chip.outstock{background:rgba(255,85,114,0.07);border:1px solid rgba(255,85,114,0.2);color:var(--red);text-decoration:line-through;opacity:0.7;}
 .variant-chip .v-price{color:var(--text);margin-left:4px;font-family:'DM Sans',sans-serif;font-weight:600}
 
-/* ACCESSORY CARDS */
 .acc-admin-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;transition:border-color 0.2s,box-shadow 0.2s;animation:fadeUp 0.35s ease both;}
 .acc-admin-card:hover{border-color:rgba(37,211,102,0.3);box-shadow:0 4px 20px rgba(37,211,102,0.07)}
 .acc-admin-head{display:flex;align-items:center;gap:14px}
@@ -134,18 +124,15 @@ nav h1 em{font-style:normal;color:var(--accent)}
 .acc-admin-price{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#5effa8;}
 .acc-admin-old{font-size:0.78rem;color:var(--muted);text-decoration:line-through;}
 
-/* PANELS */
 .admin-panel{display:none}
 .admin-panel.active{display:block}
 
-/* EMPTY / LOADING */
 .empty-state{text-align:center;padding:60px 20px;color:var(--muted);border:1px dashed var(--border);border-radius:16px;}
 .empty-state .ei{font-size:2.5rem;display:block;margin-bottom:10px}
 .loading{text-align:center;padding:40px;color:var(--muted);font-size:0.9rem}
 .spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;margin-right:8px;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* TOAST */
 .toast{position:fixed;bottom:28px;right:28px;background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:12px 20px;font-size:0.85rem;font-weight:600;color:var(--accent);box-shadow:0 8px 32px rgba(0,0,0,0.4);transform:translateY(80px);opacity:0;transition:all 0.3s cubic-bezier(.22,.68,0,1.2);z-index:9999;pointer-events:none;display:flex;align-items:center;gap:8px;}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.error{border-color:rgba(255,85,114,0.4);color:var(--red)}
@@ -156,32 +143,32 @@ nav h1 em{font-style:normal;color:var(--accent)}
 <!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
-    <div class="logo">🔐</div>
+    <div class="logo">\ud83d\udd10</div>
     <h2>Admin Login</h2>
-    <p>4S Mobile — Staff Only</p>
+    <p>4S Mobile \u2014 Staff Only</p>
     <input type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
-    <button onclick="doLogin()" id="loginBtn">Login →</button>
-    <div class="login-err" id="loginErr">❌ Wrong password</div>
+    <button onclick="doLogin()" id="loginBtn">Login \u2192</button>
+    <div class="login-err" id="loginErr">\u274c Wrong password</div>
   </div>
 </div>
 
 <!-- NAV -->
 <nav>
   <div class="nav-left">
-    <div class="nav-icon">📱</div>
+    <div class="nav-icon">\ud83d\udcf1</div>
     <h1>4S <em>Mobile</em></h1>
     <span class="nav-badge">ADMIN</span>
   </div>
   <div class="nav-right">
-    <span class="api-indicator">⚡ FastAPI</span>
+    <span class="api-indicator">\u26a1 FastAPI</span>
     <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 </nav>
 
 <!-- TABS -->
 <div class="admin-tabs">
-  <button class="atab active" onclick="switchAdminTab('phones',this)">📱 Phones</button>
-  <button class="atab" onclick="switchAdminTab('accessories',this)">🎧 Accessories</button>
+  <button class="atab active" onclick="switchAdminTab('phones',this)">\ud83d\udcf1 Phones</button>
+  <button class="atab" onclick="switchAdminTab('accessories',this)">\ud83c\udfa7 Accessories</button>
 </div>
 
 <!-- MAIN -->
@@ -199,7 +186,7 @@ nav h1 em{font-style:normal;color:var(--accent)}
   <!-- PHONES PANEL -->
   <div class="admin-panel active" id="panel-phones">
     <div class="form-card" id="phoneFormCard" style="display:none">
-      <h3 id="phoneFormTitle">➕ Add New Phone</h3>
+      <h3 id="phoneFormTitle">\u2795 Add New Phone</h3>
       <div class="form-grid">
         <div class="field">
           <label>Brand</label>
@@ -221,17 +208,17 @@ nav h1 em{font-style:normal;color:var(--accent)}
       </div>
       <div class="variants-head">
         <span>Variants (RAM / Storage / Price)</span>
-        <button class="btn-add-variant" onclick="addVariantRow()">➕ Add Variant</button>
+        <button class="btn-add-variant" onclick="addVariantRow()">\u2795 Add Variant</button>
       </div>
       <div id="variantRows"></div>
       <div class="form-actions">
-        <button class="btn-save" id="phoneSaveBtn" onclick="saveProduct()">💾 Save Phone</button>
+        <button class="btn-save" id="phoneSaveBtn" onclick="saveProduct()">\ud83d\udcbe Save Phone</button>
         <button class="btn-cancel" onclick="closePhoneForm()">Cancel</button>
       </div>
     </div>
     <div class="sec-head">
       <h2>All Phones</h2>
-      <button class="btn-primary" onclick="openAddPhoneForm()">➕ Add Phone</button>
+      <button class="btn-primary" onclick="openAddPhoneForm()">\u2795 Add Phone</button>
     </div>
     <div id="productList"></div>
   </div>
@@ -239,362 +226,19 @@ nav h1 em{font-style:normal;color:var(--accent)}
   <!-- ACCESSORIES PANEL -->
   <div class="admin-panel" id="panel-accessories">
     <div class="form-card" id="accFormCard" style="display:none">
-      <h3 id="accFormTitle">➕ Add Accessory</h3>
+      <h3 id="accFormTitle">\u2795 Add Accessory</h3>
       <div class="form-grid">
         <div class="field">
           <label>Category</label>
           <select id="aCategory">
-            <option value="earphones">🎧 Earphones</option>
-            <option value="charger">🔌 Charger</option>
-            <option value="case">🛡️ Case</option>
-            <option value="cable">🔗 Cable</option>
-            <option value="powerbank">🔋 Power Bank</option>
-            <option value="screenguard">📲 Screen Guard</option>
+            <option value="earphones">\ud83c\udfa7 Earphones</option>
+            <option value="charger">\ud83d\udd0c Charger</option>
+            <option value="case">\ud83d\udee1\ufe0f Case</option>
+            <option value="cable">\ud83d\udd17 Cable</option>
+            <option value="powerbank">\ud83d\udd0b Power Bank</option>
+            <option value="screenguard">\ud83d\udcf2 Screen Guard</option>
           </select>
         </div>
         <div class="field">
           <label>Name</label>
-          <input type="text" id="aName" placeholder="e.g. boAt Bassheads 100">
-        </div>
-        <div class="field">
-          <label>Price (₹)</label>
-          <input type="number" id="aPrice" placeholder="299">
-        </div>
-        <div class="field">
-          <label>Old Price (₹) — optional</label>
-          <input type="number" id="aOldPrice" placeholder="599">
-        </div>
-        <div class="field" style="grid-column:1/-1">
-          <label>Image URL</label>
-          <input type="text" id="aImg" placeholder="https://...">
-        </div>
-      </div>
-      <div class="form-actions">
-        <button class="btn-save" id="accSaveBtn" onclick="saveAccessory()">💾 Save Accessory</button>
-        <button class="btn-cancel" onclick="closeAccForm()">Cancel</button>
-      </div>
-    </div>
-    <div class="sec-head">
-      <h2>All Accessories</h2>
-      <button class="btn-primary" onclick="openAddAccForm()">➕ Add Accessory</button>
-    </div>
-    <div id="accList"></div>
-  </div>
-
-</div>
-<div class="toast" id="toast"></div>
-
-<script>
-const API_URL = "https://foursmobileswebsite.onrender.com"  // ✅
-const ACC_KEY = "4s_accessories";
-const CAT_LABELS = {
-  earphones:'🎧 Earphones', charger:'🔌 Charger', case:'🛡️ Case',
-  cable:'🔗 Cable', powerbank:'🔋 Power Bank', screenguard:'📲 Screen Guard'
-};
-
-let token = null, editingPhoneId = null, editingAccId = null, vRowId = 0;
-
-function getAccStore() { try { return JSON.parse(localStorage.getItem(ACC_KEY)) || []; } catch { return []; } }
-function saveAccStore(arr) { localStorage.setItem(ACC_KEY, JSON.stringify(arr)); }
-
-// TAB
-function switchAdminTab(tab, el) {
-  document.querySelectorAll('.atab').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + tab).classList.add('active');
-}
-
-// AUTH
-async function doLogin() {
-  const pw = document.getElementById("pwInput").value;
-  const btn = document.getElementById("loginBtn");
-  btn.textContent = "Logging in..."; btn.disabled = true;
-  try {
-    const res = await fetch(`${API_URL}/admin/login`, {
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ password: pw })
-    });
-    if (!res.ok) throw new Error("Wrong password");
-    const data = await res.json();
-    token = data.access_token;
-    sessionStorage.setItem("admin_token", token);
-    document.getElementById("loginScreen").style.display = "none";
-    loadAll();
-  } catch(e) {
-    const err = document.getElementById("loginErr");
-    err.style.display = "block"; err.textContent = "❌ " + e.message;
-  } finally { btn.textContent = "Login →"; btn.disabled = false; }
-}
-
-function logout() {
-  token = null; sessionStorage.removeItem("admin_token");
-  document.getElementById("loginScreen").style.display = "flex";
-  document.getElementById("pwInput").value = "";
-}
-
-function authHeaders() {
-  return { "Content-Type":"application/json", "Authorization":`Bearer ${token}` };
-}
-
-async function loadAll() { await loadProducts(); renderAccList(); }
-
-// PHONES
-async function loadProducts() {
-  document.getElementById("productList").innerHTML =
-    `<div class="loading"><span class="spinner"></span>Loading...</div>`;
-  try {
-    const res = await fetch(`${API_URL}/products/`);
-    const products = await res.json();
-    renderProducts(products);
-    let v=0, ins=0, out=0;
-    products.forEach(p => p.variants.forEach(vv => { v++; vv.stock?ins++:out++; }));
-    document.getElementById("statTotal").textContent    = products.length;
-    document.getElementById("statVariants").textContent = v;
-    document.getElementById("statInStock").textContent  = ins;
-    document.getElementById("statOut").textContent      = out;
-  } catch {
-    document.getElementById("productList").innerHTML =
-      `<div class="empty-state"><span class="ei">⚠️</span><p>API connect ஆகல — URL check பண்ணு</p></div>`;
-  }
-}
-
-function renderProducts(products) {
-  if (!products.length) {
-    document.getElementById("productList").innerHTML =
-      `<div class="empty-state"><span class="ei">📭</span><p>No phones yet!</p></div>`; return;
-  }
-  document.getElementById("productList").innerHTML = products.map((p,i) => {
-    const chips = p.variants.map(v => `
-      <div class="variant-chip ${v.stock?'instock':'outstock'}">
-        ${v.ram}GB/${v.storage}GB
-        <span class="v-price">₹${v.price.toLocaleString("en-IN")}</span>
-      </div>`).join('');
-    const safeP = JSON.stringify(p).replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    return `
-    <div class="product-card" style="animation-delay:${i*0.06}s">
-      <div class="product-head">
-        <img class="product-img" src="${p.img_url||'https://via.placeholder.com/80?text='+encodeURIComponent(p.name)}" alt="${p.name}">
-        <div class="product-info">
-          <div class="product-name">${p.name}</div>
-          <div class="product-brand brand-${p.brand}">${p.brand.toUpperCase()}</div>
-        </div>
-        <div class="product-actions">
-          <button class="btn-edit" onclick="openEditPhoneForm(${p.id})">✏️ Edit</button>
-          <button class="btn-delete" onclick="deleteProduct(${p.id},'${p.name.replace(/'/g,"\\'")}')">🗑️</button>
-        </div>
-      </div>
-      <div class="variants-display">${chips}</div>
-    </div>`;
-  }).join('');
-}
-
-// Store products cache for edit
-let _productsCache = [];
-
-async function openEditPhoneForm(id) {
-  if (!_productsCache.length) {
-    const res = await fetch(`${API_URL}/products/`);
-    _productsCache = await res.json();
-  }
-  const p = _productsCache.find(x => x.id === id);
-  if (!p) return;
-  editingPhoneId = p.id;
-  document.getElementById("phoneFormTitle").textContent = "✏️ Edit — " + p.name;
-  document.getElementById("fBrand").value = p.brand;
-  document.getElementById("fName").value  = p.name;
-  document.getElementById("fImg").value   = p.img_url || "";
-  document.getElementById("variantRows").innerHTML = "";
-  p.variants.forEach(v => addVariantRow(v));
-  document.getElementById("phoneFormCard").style.display = "block";
-  document.getElementById("phoneFormCard").scrollIntoView({behavior:"smooth"});
-}
-
-function openAddPhoneForm() {
-  editingPhoneId = null;
-  document.getElementById("phoneFormTitle").textContent = "➕ Add New Phone";
-  document.getElementById("fBrand").value = "vivo";
-  document.getElementById("fName").value  = "";
-  document.getElementById("fImg").value   = "";
-  document.getElementById("variantRows").innerHTML = "";
-  addVariantRow();
-  document.getElementById("phoneFormCard").style.display = "block";
-  document.getElementById("phoneFormCard").scrollIntoView({behavior:"smooth"});
-}
-
-function closePhoneForm() {
-  document.getElementById("phoneFormCard").style.display = "none"; editingPhoneId = null;
-}
-
-function addVariantRow(data=null) {
-  vRowId++;
-  const id = vRowId;
-  const div = document.createElement("div");
-  div.className = "variant-row"; div.id = "vrow_"+id;
-  div.innerHTML = `
-    <div>
-      <label>RAM</label>
-      <select class="v-ram">${[2,3,4,6,8,12].map(r=>`<option value="${r}" ${data&&data.ram==r?'selected':''}>${r}GB</option>`).join('')}</select>
-    </div>
-    <div>
-      <label>Storage</label>
-      <select class="v-storage">${[32,64,128,256,512].map(s=>`<option value="${s}" ${data&&data.storage==s?'selected':''}>${s}GB</option>`).join('')}</select>
-    </div>
-    <div>
-      <label>Price (₹)</label>
-      <input type="number" class="v-price" placeholder="12999" value="${data?data.price:''}">
-    </div>
-    <div>
-      <label>Stock</label>
-      <label class="stock-toggle">
-        <input type="checkbox" class="v-stock" ${!data||data.stock?'checked':''}>
-        <span>In Stock</span>
-      </label>
-    </div>
-    <button class="del-variant" onclick="removeVariantRow('vrow_${id}')">✕</button>`;
-  document.getElementById("variantRows").appendChild(div);
-}
-
-function removeVariantRow(id) {
-  if (document.querySelectorAll(".variant-row").length <= 1) { showToast("Min 1 variant வேணும்!", true); return; }
-  document.getElementById(id)?.remove();
-}
-
-async function saveProduct() {
-  const brand   = document.getElementById("fBrand").value;
-  const name    = document.getElementById("fName").value.trim();
-  const img_url = document.getElementById("fImg").value.trim() || null;
-  if (!name) { showToast("Model name enter பண்ணு!", true); return; }
-  const variants = []; let valid = true;
-  document.querySelectorAll(".variant-row").forEach(row => {
-    const price = parseInt(row.querySelector(".v-price").value);
-    if (!price) { valid = false; return; }
-    variants.push({ ram:parseInt(row.querySelector(".v-ram").value), storage:parseInt(row.querySelector(".v-storage").value), price, stock:row.querySelector(".v-stock").checked });
-  });
-  if (!valid) { showToast("All variants-க்கு price போடு!", true); return; }
-  const btn = document.getElementById("phoneSaveBtn");
-  btn.disabled = true; btn.textContent = "Saving...";
-  try {
-    const res = editingPhoneId
-      ? await fetch(`${API_URL}/admin/products/${editingPhoneId}`, { method:"PUT", headers:authHeaders(), body:JSON.stringify({brand,name,img_url}) })
-      : await fetch(`${API_URL}/admin/products`, { method:"POST", headers:authHeaders(), body:JSON.stringify({brand,name,img_url,variants}) });
-    if (res.status===401) { showToast("Session expired!", true); logout(); return; }
-    if (!res.ok) throw new Error("Save failed");
-    _productsCache = [];
-    showToast(editingPhoneId ? "✅ Phone updated!" : "✅ Phone added!");
-    closePhoneForm(); loadProducts();
-  } catch(e) { showToast("Error: "+e.message, true); }
-  finally { btn.disabled=false; btn.textContent="💾 Save Phone"; }
-}
-
-async function deleteProduct(id, name) {
-  if (!confirm(`"${name}" delete பண்றீயா?`)) return;
-  try {
-    const res = await fetch(`${API_URL}/admin/products/${id}`, { method:"DELETE", headers:authHeaders() });
-    if (!res.ok) throw new Error("Delete failed");
-    _productsCache = [];
-    showToast("🗑️ Deleted"); loadProducts();
-  } catch(e) { showToast("Error: "+e.message, true); }
-}
-
-// ACCESSORIES
-function renderAccList() {
-  const accs = getAccStore();
-  document.getElementById("statAcc").textContent = accs.length;
-  if (!accs.length) {
-    document.getElementById("accList").innerHTML =
-      `<div class="empty-state"><span class="ei">🎧</span><p>No accessories yet — Add one!</p></div>`; return;
-  }
-  document.getElementById("accList").innerHTML = accs.map((a,i) => `
-    <div class="acc-admin-card" style="animation-delay:${i*0.05}s">
-      <div class="acc-admin-head">
-        <img class="acc-admin-img" src="${a.img_url||'https://via.placeholder.com/80?text='+encodeURIComponent(a.name)}" alt="${a.name}">
-        <div class="acc-admin-info">
-          <div class="acc-admin-name">${a.name}</div>
-          <span class="acc-cat-badge">${CAT_LABELS[a.category]||a.category}</span>
-          <div class="acc-price-row">
-            <span class="acc-admin-price">₹${a.price.toLocaleString("en-IN")}</span>
-            ${a.old_price?`<span class="acc-admin-old">₹${a.old_price.toLocaleString("en-IN")}</span>`:''}
-          </div>
-        </div>
-        <div class="product-actions">
-          <button class="btn-edit" onclick="openEditAccForm('${a.id}')">✏️ Edit</button>
-          <button class="btn-delete" onclick="deleteAccessory('${a.id}','${a.name.replace(/'/g,"\\'")}')">🗑️</button>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function openAddAccForm() {
-  editingAccId = null;
-  document.getElementById("accFormTitle").textContent = "➕ Add Accessory";
-  ["aCategory","aName","aPrice","aOldPrice","aImg"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el.tagName === "SELECT") el.selectedIndex = 0;
-    else el.value = "";
-  });
-  document.getElementById("accFormCard").style.display = "block";
-  document.getElementById("accFormCard").scrollIntoView({behavior:"smooth"});
-}
-
-function openEditAccForm(id) {
-  const a = getAccStore().find(x => x.id === id);
-  if (!a) return;
-  editingAccId = a.id;
-  document.getElementById("accFormTitle").textContent = "✏️ Edit — " + a.name;
-  document.getElementById("aCategory").value = a.category;
-  document.getElementById("aName").value     = a.name;
-  document.getElementById("aPrice").value    = a.price;
-  document.getElementById("aOldPrice").value = a.old_price || "";
-  document.getElementById("aImg").value      = a.img_url || "";
-  document.getElementById("accFormCard").style.display = "block";
-  document.getElementById("accFormCard").scrollIntoView({behavior:"smooth"});
-}
-
-function closeAccForm() {
-  document.getElementById("accFormCard").style.display = "none"; editingAccId = null;
-}
-
-function saveAccessory() {
-  const name      = document.getElementById("aName").value.trim();
-  const price     = parseInt(document.getElementById("aPrice").value);
-  const old_price = parseInt(document.getElementById("aOldPrice").value) || null;
-  const category  = document.getElementById("aCategory").value;
-  const img_url   = document.getElementById("aImg").value.trim() || null;
-  if (!name)  { showToast("Name enter பண்ணு!", true); return; }
-  if (!price) { showToast("Price enter பண்ணு!", true); return; }
-  const accs = getAccStore();
-  if (editingAccId) {
-    const idx = accs.findIndex(a => a.id === editingAccId);
-    if (idx > -1) accs[idx] = { ...accs[idx], name, price, old_price, category, img_url };
-    showToast("✅ Accessory updated!");
-  } else {
-    accs.push({ id:"a"+Date.now(), name, price, old_price, category, img_url });
-    showToast("✅ Accessory added!");
-  }
-  saveAccStore(accs); closeAccForm(); renderAccList();
-}
-
-function deleteAccessory(id, name) {
-  if (!confirm(`"${name}" delete பண்றீயா?`)) return;
-  saveAccStore(getAccStore().filter(a => a.id !== id));
-  showToast("🗑️ Deleted"); renderAccList();
-}
-
-// TOAST
-function showToast(msg, isError=false) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = "toast" + (isError?" error":"");
-  setTimeout(()=>t.classList.add("show"), 10);
-  setTimeout(()=>t.classList.remove("show"), 2800);
-}
-
-// INIT
-window.onload = () => {
-  const saved = sessionStorage.getItem("admin_token");
-  if (saved) { token=saved; document.getElementById("loginScreen").style.display="none"; loadAll(); }
-};
-</script>
-</body>
-</html>
+          <input type="text" id="aName" placeholder="e.g. boAt Bassheads 100
