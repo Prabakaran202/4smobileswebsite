@@ -218,7 +218,7 @@ nav h1 em{font-style:normal;color:var(--accent)}
 
 <script>
 // ── CONFIG — உன் Render URL போடு ──
-const API_URL = "https://foursmobileswebsite.onrender.com";
+const API_URL = "https://4smobileswebsite.onrender.com";
 
 let token = null;
 let editingId = null;
@@ -228,8 +228,13 @@ let vRowId = 0;
 async function doLogin() {
   const pw = document.getElementById("pwInput").value;
   const btn = document.getElementById("loginBtn");
-  btn.textContent = "Logging in...";
+  btn.textContent = "⏳ Waking server...";
   btn.disabled = true;
+
+  // Wake up Render free tier (may take 30-50 sec)
+  try { await fetch(`${API_URL}/`); } catch(e) {}
+
+  btn.textContent = "Logging in...";
 
   try {
     const res = await fetch(`${API_URL}/admin/login`, {
